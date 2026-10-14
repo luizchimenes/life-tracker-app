@@ -6,8 +6,19 @@
 	objectVersion = 90;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		6C6C094C30801EB8001CD4BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000100000000;
+			remoteInfo = "Life Tracker App";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		000000000000000000000120 /* Life Tracker App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Life Tracker App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C6C093B30801E18001CD4BD /* Life Tracker App Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Life Tracker App Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,20 @@
 			path = "Life Tracker App";
 			sourceTree = "<group>";
 		};
+		6C6C093C30801E18001CD4BD /* Life Tracker App Tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Life Tracker App Tests";
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		000000000000000130000000 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		6C6C093830801E18001CD4BD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
 			);
@@ -31,6 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				000000000000000000000010 /* Life Tracker App */,
+				6C6C093C30801E18001CD4BD /* Life Tracker App Tests */,
 				000000000000000000000020 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -39,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				000000000000000000000120 /* Life Tracker App.app */,
+				6C6C093B30801E18001CD4BD /* Life Tracker App Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -64,6 +87,27 @@
 			productReference = 000000000000000000000120 /* Life Tracker App.app */;
 			productType = "com.apple.product-type.application";
 		};
+		6C6C093A30801E18001CD4BD /* Life Tracker App Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C6C093F30801E18001CD4BD /* Build configuration list for PBXNativeTarget "Life Tracker App Tests" */;
+			buildPhases = (
+				6C6C093730801E18001CD4BD /* Sources */,
+				6C6C093830801E18001CD4BD /* Frameworks */,
+				6C6C093930801E18001CD4BD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6C6C094D30801EB8001CD4BD /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6C6C093C30801E18001CD4BD /* Life Tracker App Tests */,
+			);
+			name = "Life Tracker App Tests";
+			productName = "Life Tracker App Tests";
+			productReference = 6C6C093B30801E18001CD4BD /* Life Tracker App Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -71,11 +115,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2630;
+				LastSwiftUpdateCheck = 2700;
 				LastUpgradeCheck = 2700;
 				TargetAttributes = {
 					000000000000000100000000 = {
 						CreatedOnToolsVersion = 26.3;
+					};
+					6C6C093A30801E18001CD4BD = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 000000000000000100000000;
 					};
 				};
 			};
@@ -85,6 +133,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"pt-BR",
 			);
 			mainGroup = 000000000000000000000001;
 			minimizedProjectReferenceProxies = 1;
@@ -94,12 +143,18 @@
 			projectRoot = "";
 			targets = (
 				000000000000000100000000 /* Life Tracker App */,
+				6C6C093A30801E18001CD4BD /* Life Tracker App Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		000000000000000140000000 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		6C6C093930801E18001CD4BD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
 			);
@@ -112,7 +167,20 @@
 			files = (
 			);
 		};
+		6C6C093730801E18001CD4BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6C6C094D30801EB8001CD4BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000100000000 /* Life Tracker App */;
+			targetProxy = 6C6C094C30801EB8001CD4BD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		000000000000000011000000 /* Debug configuration for PBXProject "Life Tracker App" */ = {
@@ -252,6 +320,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U3G2954483;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -269,7 +338,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "devplaceholder.$(PROJECT_UNIQUE_VALUE:identifier).$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.luizgustavochimenespintopersonalteam.LifeTrackerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -289,6 +358,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U3G2954483;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -306,7 +376,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "devplaceholder.$(PROJECT_UNIQUE_VALUE:identifier).$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.luizgustavochimenespintopersonalteam.LifeTrackerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -318,6 +388,56 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+			};
+			name = Release;
+		};
+		6C6C094030801E18001CD4BD /* Debug configuration for PBXNativeTarget "Life Tracker App Tests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.Life-Tracker-App-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Life Tracker App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Life Tracker App";
+				XROS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Debug;
+		};
+		6C6C094130801E18001CD4BD /* Release configuration for PBXNativeTarget "Life Tracker App Tests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.Life-Tracker-App-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Life Tracker App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Life Tracker App";
+				XROS_DEPLOYMENT_TARGET = 27.0;
 			};
 			name = Release;
 		};
@@ -337,6 +457,14 @@
 			buildConfigurations = (
 				000000000000000111000000 /* Debug configuration for PBXNativeTarget "Life Tracker App" */,
 				000000000000000112000000 /* Release configuration for PBXNativeTarget "Life Tracker App" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		6C6C093F30801E18001CD4BD /* Build configuration list for PBXNativeTarget "Life Tracker App Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C6C094030801E18001CD4BD /* Debug configuration for PBXNativeTarget "Life Tracker App Tests" */,
+				6C6C094130801E18001CD4BD /* Release configuration for PBXNativeTarget "Life Tracker App Tests" */,
 			);
 			defaultConfigurationName = Release;
 		};
