@@ -4,10 +4,15 @@ struct MonthlyFinanceSnapshot {
     let transactions: [Transaction]
     let income: Decimal
     let expenses: Decimal
+    let investments: Decimal
     let cycle: FinancialCycle?
 
     var balance: Decimal {
         income - expenses
+    }
+
+    var availableAfterInvestments: Decimal {
+        balance - investments
     }
 
     init(
@@ -22,6 +27,7 @@ struct MonthlyFinanceSnapshot {
             self.transactions = []
             income = 0
             expenses = 0
+            investments = 0
             self.cycle = nil
             return
         }
@@ -37,6 +43,9 @@ struct MonthlyFinanceSnapshot {
             .reduce(Decimal.zero) { $0 + $1.amount }
         expenses = monthlyTransactions
             .filter { $0.type == .expense }
+            .reduce(Decimal.zero) { $0 + $1.amount }
+        investments = monthlyTransactions
+            .filter { $0.type == .investment }
             .reduce(Decimal.zero) { $0 + $1.amount }
     }
 

@@ -113,11 +113,21 @@ struct FinancialCycleReportView: View {
             ) {
                 reportMetric("Income", amount: report.snapshot.income, tint: .green)
                 reportMetric("Expenses", amount: report.snapshot.expenses, tint: .red)
+                reportMetric("Investments", amount: report.snapshot.investments, tint: .indigo)
                 reportMetric(
                     "Balance",
                     amount: report.snapshot.balance,
                     tint: report.snapshot.balance < 0 ? .red : .primary
                 )
+            }
+
+            if let percentage = report.investmentPercentageOfIncome {
+                LabeledContent("Investment Percentage of Income") {
+                    Text(
+                        percentage,
+                        format: .percent.precision(.fractionLength(1))
+                    )
+                }
             }
 
             if let budget = report.monthlyBudget {

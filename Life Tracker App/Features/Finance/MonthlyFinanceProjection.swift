@@ -57,8 +57,19 @@ struct MonthlyFinanceProjection {
         actualExpenses + pendingRecurringExpenses + pendingFixedBillExpenses
     }
 
+    /// Income − expenses, projected. Does not subtract investments; see
+    /// `projectedAvailableAfterInvestments` for the money left to use.
     var projectedBalance: Decimal {
         projectedIncome - projectedExpenses
+    }
+
+    /// Investments have no schedule, so the projection is what was invested.
+    var projectedInvestments: Decimal {
+        actual.investments
+    }
+
+    var projectedAvailableAfterInvestments: Decimal {
+        projectedIncome - projectedExpenses - projectedInvestments
     }
 
     init(

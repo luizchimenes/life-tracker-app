@@ -12,7 +12,7 @@ struct AddFixedBillView: View {
     @State private var selectedCategoryID: UUID?
     @State private var dueDay: Int
     @State private var amountMode: FixedBillAmountMode
-    @State private var estimatedAmount: Decimal
+    @State private var estimatedAmount: Decimal?
     @State private var includesEstimate: Bool
     @State private var defaultPaymentMethod: PaymentMethod
     @State private var startDate: Date
@@ -36,7 +36,7 @@ struct AddFixedBillView: View {
     private var canSave: Bool {
         !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && selectedCategory != nil
-            && (amountMode == .variable || estimatedAmount > 0)
+            && (amountMode == .variable || (estimatedAmount ?? 0) > 0)
     }
 
     init(fixedBill: FixedBill? = nil) {
@@ -45,7 +45,7 @@ struct AddFixedBillView: View {
         _selectedCategoryID = State(initialValue: fixedBill?.category.id)
         _dueDay = State(initialValue: fixedBill?.dueDay ?? 10)
         _amountMode = State(initialValue: fixedBill?.amountMode ?? .variable)
-        _estimatedAmount = State(initialValue: fixedBill?.estimatedAmount ?? 0)
+        _estimatedAmount = State(initialValue: fixedBill?.estimatedAmount)
         _includesEstimate = State(initialValue: fixedBill?.estimatedAmount != nil)
         _defaultPaymentMethod = State(
             initialValue: fixedBill?.defaultPaymentMethod ?? .bankSlip
@@ -87,20 +87,9 @@ struct AddFixedBillView: View {
                         HStack {
                             Text(amountMode == .variable ? "Estimated Amount" : "Expected Amount")
                             Spacer()
-                            Text("R$")
-                                .foregroundStyle(.secondary)
-                            TextField(
-                                "0,00",
-                                value: $estimatedAmount,
-                                format: .number
-                                    .locale(AppLocalization.selectedLocale)
-                                    .precision(.fractionLength(0...2))
-                            )
-                            .multilineTextAlignment(.trailing)
-                            .frame(maxWidth: 120)
-#if os(iOS)
-                            .keyboardType(.decimalPad)
-#endif
+                            MoneyField("R$ 0,00", amount: $estimatedAmount)
+                                .multilineTextAlignment(.trailing)
+                                .frame(maxWidth: 150)
                         }
                     }
                 }
@@ -158,7 +147,7 @@ struct AddFixedBillView: View {
         guard let selectedCategory else { return }
 
         let storedEstimate: Decimal? = amountMode == .fixed || includesEstimate
-            ? max(estimatedAmount, 0)
+            ? estimatedAmount.map { max($0, 0) }
             : nil
 
         if let fixedBill {

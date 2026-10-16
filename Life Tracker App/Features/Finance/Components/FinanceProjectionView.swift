@@ -10,20 +10,25 @@ struct FinanceProjectionView: View {
     var body: some View {
         VStack(spacing: 10) {
             valueRow(
-                title: "Actual spending",
-                amount: projection.actualExpenses
-            )
-            valueRow(
-                title: "Projected spending",
-                amount: projection.projectedExpenses
+                title: "Projected income",
+                amount: projection.projectedIncome
             )
             valueRow(
                 title: "Scheduled / estimated still due",
                 amount: projection.pendingRecurringExpenses + projection.pendingFixedBillExpenses
             )
             valueRow(
-                title: "Projected balance",
+                title: "Projected spending",
+                amount: projection.projectedExpenses
+            )
+            valueRow(
+                title: "Projected balance before investments",
                 amount: projection.projectedBalance
+            )
+            valueRow(
+                title: "Projected Available After Investments",
+                amount: projection.projectedAvailableAfterInvestments,
+                tint: projection.projectedAvailableAfterInvestments < 0 ? .red : .primary
             )
 
             let unknownCount = projection.pendingFixedBillOccurrences.count {

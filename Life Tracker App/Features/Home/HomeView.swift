@@ -10,33 +10,13 @@ struct HomeView: View {
 
     let onSeeFinance: () -> Void
 
-    private var snapshot: MonthlyFinanceSnapshot {
-        projection.actual
-    }
-
-    private var projection: MonthlyFinanceProjection {
-        MonthlyFinanceProjection(
+    private var overview: FinanceOverview {
+        FinanceOverview(
             transactions: transactions,
             recurringTransactions: recurringTransactions,
-            fixedBillOccurrences: fixedBillOccurrences
-        )
-    }
-
-    private var payableInvoices: [CreditCardInvoice] {
-        Array(
-            CreditCardInvoicePaymentService.payableInvoices(
-                creditCardInvoices,
-                transactions: transactions
-            )
-            .prefix(3)
-        )
-    }
-
-    private var pendingBills: [FixedBillOccurrence] {
-        Array(
-            FixedBillCycleSnapshot(occurrences: fixedBillOccurrences)
-                .pendingOccurrences
-                .prefix(max(3 - payableInvoices.count, 0))
+            fixedBillOccurrences: fixedBillOccurrences,
+            creditCardInvoices: creditCardInvoices,
+            monthlyBudget: monthlyBudget
         )
     }
 
@@ -70,37 +50,18 @@ struct HomeView: View {
                         Button("See Finance", action: onSeeFinance)
                     }
 
-                    HomeFinanceSummaryView(
-                        balance: snapshot.balance,
-                        expenses: snapshot.expenses,
-                        projectedExpenses: projection.projectedExpenses,
-                        monthlyBudget: monthlyBudget
-                    )
+                    let overview = self.overview
 
-                    if !pendingBills.isEmpty || !payableInvoices.isEmpty {
+                    HomeFinanceSummaryView(overview: overview)
+
+                    if overview.bills.pendingCount > 0 || !overview.bills.upcomingInvoices.isEmpty {
                         Text("Bills to Pay")
                             .font(.headline)
 
-                        VStack(spacing: 0) {
-                            ForEach(payableInvoices) { invoice in
-                                HomeInvoiceBillRow(invoice: invoice)
-                                    .padding()
-
-                                if invoice.id != payableInvoices.last?.id || !pendingBills.isEmpty {
-                                    Divider()
-                                }
-                            }
-
-                            ForEach(pendingBills) { occurrence in
-                                HomeFixedBillRow(occurrence: occurrence)
-                                    .padding()
-
-                                if occurrence.id != pendingBills.last?.id {
-                                    Divider()
-                                }
-                            }
+                        Button(action: onSeeFinance) {
+                            HomeBillsSummaryView(bills: overview.bills)
                         }
-                        .background(.background.secondary, in: .rect(cornerRadius: 16))
+                        .buttonStyle(.plain)
                     }
 
                     Text("Recent Activity")

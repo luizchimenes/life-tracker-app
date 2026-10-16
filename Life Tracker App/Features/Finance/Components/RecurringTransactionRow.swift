@@ -27,6 +27,11 @@ struct RecurringTransactionRow: View {
                 HStack(spacing: 3) {
                     Text(recurringTransaction.type.displayName)
                     Text("• Monthly on day \(recurringTransaction.dayOfMonth)")
+                    if recurringTransaction.type == .expense,
+                       recurringTransaction.paymentMethod == .creditCard,
+                       let card = recurringTransaction.creditCard {
+                        Text("• \(card.name)")
+                    }
                 }
                 .font(.caption)
                 .foregroundStyle(.secondary)

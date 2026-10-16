@@ -28,27 +28,20 @@ struct FinanceView: View {
     @State private var paymentErrorMessage = ""
     @State private var showsPaymentError = false
 
-    private var snapshot: MonthlyFinanceSnapshot {
-        projection.actual
-    }
+    @State private var showsCycleDetails = false
 
-    private var projection: MonthlyFinanceProjection {
-        MonthlyFinanceProjection(
+    private var overview: FinanceOverview {
+        FinanceOverview(
             transactions: transactions,
             recurringTransactions: recurringTransactions,
-            fixedBillOccurrences: fixedBillOccurrences
+            fixedBillOccurrences: fixedBillOccurrences,
+            creditCardInvoices: creditCardInvoices,
+            monthlyBudget: monthlyBudget
         )
     }
 
     private var fixedBillSnapshot: FixedBillCycleSnapshot {
         FixedBillCycleSnapshot(occurrences: fixedBillOccurrences)
-    }
-
-    private var payableInvoices: [CreditCardInvoice] {
-        CreditCardInvoicePaymentService.payableInvoices(
-            creditCardInvoices,
-            transactions: transactions
-        )
     }
 
     private var monthlyBudget: Decimal? {
@@ -60,10 +53,10 @@ struct FinanceView: View {
         return budget
     }
 
-    private var configuredBudgets: [CategoryBudget] {
+    private func configuredBudgets(_ snapshot: MonthlyFinanceSnapshot) -> [CategoryBudget] {
         budgets
             .filter { $0.monthlyLimit > 0 && $0.category.type.supports(.expense) }
-            .sorted { budgetUsage($0) > budgetUsage($1) }
+            .sorted { budgetUsage($0, snapshot) > budgetUsage($1, snapshot) }
     }
 
     private var recentTransactions: [Transaction] {
@@ -71,55 +64,56 @@ struct FinanceView: View {
     }
 
     var body: some View {
+        let overview = self.overview
+        let snapshot = overview.actual
+        let projection = overview.projection
+        let bills = overview.bills
+        let configuredBudgets = configuredBudgets(snapshot)
+
         NavigationStack {
             List {
                 Section {
-                    FinanceSummaryView(
-                        income: snapshot.income,
-                        expenses: snapshot.expenses,
-                        balance: snapshot.balance
-                    )
+                    SafeToSpendView(safeToSpend: overview.safeToSpend)
+                        .padding(.vertical, 4)
+
+                    DisclosureGroup("Cycle Details", isExpanded: $showsCycleDetails) {
+                        FinanceSummaryView(
+                            income: snapshot.income,
+                            expenses: snapshot.expenses,
+                            investments: snapshot.investments,
+                            balance: snapshot.balance,
+                            availableAfterInvestments: snapshot.availableAfterInvestments
+                        )
+                        FinanceProjectionView(
+                            projection: projection,
+                            monthlyBudget: monthlyBudget
+                        )
+                    }
                 } header: {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Financial Cycle")
-                        if let cycleDescription {
-                            Text(cycleDescription)
+                        if let cycleDescription = cycleDescription(snapshot) {
+                            Text("\(cycleDescription) • \(Text("\(overview.safeToSpend.daysRemaining) days remaining"))")
                                 .font(.caption)
                                 .textCase(nil)
                         }
                     }
                 }
 
-                if let monthlyBudget {
-                    Section("Financial Cycle Budget") {
-                        MonthlyBudgetSummaryView(
-                            amountSpent: snapshot.expenses,
-                            budget: monthlyBudget
-                        )
-                    }
+                Section("This Cycle") {
+                    CycleActivitySummaryView(projection: projection)
                 }
 
-                Section("Projection") {
-                    FinanceProjectionView(
-                        projection: projection,
-                        monthlyBudget: monthlyBudget
-                    )
-                }
-
-                if !fixedBillSnapshot.occurrences.isEmpty {
-                    Section("Fixed Commitments") {
-                        FixedCommitmentsSummaryView(snapshot: fixedBillSnapshot)
-                    }
-                }
-
-                if !fixedBillSnapshot.occurrences.isEmpty || !payableInvoices.isEmpty {
-                    Section("Bills to Pay") {
-                        ForEach(payableInvoices) { invoice in
+                if !fixedBillSnapshot.occurrences.isEmpty
+                    || !bills.payableInvoices.isEmpty
+                    || !bills.upcomingInvoices.isEmpty {
+                    Section {
+                        ForEach(bills.payableInvoices) { item in
                             InvoiceBillRow(
-                                invoice: invoice,
-                                total: invoice.total(in: transactions)
+                                invoice: item.invoice,
+                                total: item.total
                             ) {
-                                invoiceToPay = invoice
+                                invoiceToPay = item.invoice
                             }
                         }
 
@@ -142,18 +136,36 @@ struct FinanceView: View {
                                 }
                             }
                         }
+
+                        ForEach(bills.upcomingInvoices) { item in
+                            InvoicePreviewRow(item: item)
+                        }
+                    } header: {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Bills to Pay")
+                            BillsToPaySummaryView(bills: bills)
+                                .font(.caption)
+                                .textCase(nil)
+                        }
                     }
                 }
 
                 Section("Budgets") {
-                    if configuredBudgets.isEmpty {
+                    if let monthlyBudget {
+                        MonthlyBudgetSummaryView(
+                            amountSpent: snapshot.expenses,
+                            budget: monthlyBudget
+                        )
+                    }
+
+                    if configuredBudgets.isEmpty && monthlyBudget == nil {
                         Text("No budgets configured")
                             .foregroundStyle(.secondary)
                     } else {
                         ForEach(configuredBudgets) { budget in
                             CategoryBudgetRow(
                                 budget: budget,
-                                amountSpent: amountSpent(for: budget),
+                                amountSpent: snapshot.expenses(for: budget.category),
                                 pendingRecurringAmount: projection.pendingRecurringExpenses(
                                     for: budget.category
                                 ) + projection.pendingFixedBillExpenses(for: budget.category)
@@ -309,19 +321,15 @@ struct FinanceView: View {
         }
     }
 
-    private func amountSpent(for budget: CategoryBudget) -> Decimal {
-        snapshot.expenses(for: budget.category)
-    }
-
-    private func budgetUsage(_ budget: CategoryBudget) -> Decimal {
+    private func budgetUsage(_ budget: CategoryBudget, _ snapshot: MonthlyFinanceSnapshot) -> Decimal {
         guard budget.monthlyLimit > 0 else {
             return 0
         }
 
-        return amountSpent(for: budget) / budget.monthlyLimit
+        return snapshot.expenses(for: budget.category) / budget.monthlyLimit
     }
 
-    private var cycleDescription: String? {
+    private func cycleDescription(_ snapshot: MonthlyFinanceSnapshot) -> String? {
         guard let cycle = snapshot.cycle,
               let inclusiveEnd = Calendar.current.date(byAdding: .day, value: -1, to: cycle.end) else {
             return nil

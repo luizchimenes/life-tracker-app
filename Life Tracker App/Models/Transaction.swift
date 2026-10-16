@@ -4,6 +4,7 @@ import SwiftData
 enum TransactionType: String, Codable, CaseIterable, Identifiable {
     case income
     case expense
+    case investment
 
     var id: Self { self }
 
@@ -13,6 +14,8 @@ enum TransactionType: String, Codable, CaseIterable, Identifiable {
             "Income"
         case .expense:
             "Expense"
+        case .investment:
+            "Investment"
         }
     }
 }
@@ -43,6 +46,12 @@ enum PaymentMethod: String, Codable, CaseIterable, Identifiable {
 
     var isDirectPayment: Bool {
         self != .creditCard
+    }
+
+    /// Card charges need a card and an invoice; anything created without one
+    /// falls back to Debit.
+    var directOrDebit: PaymentMethod {
+        isDirectPayment ? self : .debit
     }
 }
 

@@ -2,13 +2,14 @@ import SwiftData
 import SwiftUI
 
 enum TransactionTypeFilter: String, CaseIterable, Identifiable {
-    case all, income, expense
+    case all, income, expense, investment
     var id: Self { self }
     var title: LocalizedStringResource {
         switch self {
         case .all: "All"
         case .income: "Income"
         case .expense: "Expense"
+        case .investment: "Investment"
         }
     }
 }
@@ -69,7 +70,8 @@ struct TransactionsView: View {
     @State private var paymentMethod: PaymentMethod?
     @State private var creditCardID: UUID?
     @State private var spendingKind = SpendingKindFilter.all
-    @State private var cycleFilter = TransactionCycleFilter.all
+    @State private var cycleFilter = TransactionCycleFilter.current
+    @State private var selectedCycleStart = FinancialCycle(containing: Date.now)?.start
     @State private var sortOrder = TransactionSortOrder.dateDescending
     @State private var showsFilters = false
     @State private var transactionToDelete: Transaction?
@@ -80,30 +82,80 @@ struct TransactionsView: View {
             || creditCardID != nil || spendingKind != .all || cycleFilter != .all
     }
 
+    private var periods: [TransactionPeriodSummary] {
+        TransactionPeriodSummary.recentCycles(transactions: transactions)
+    }
+
+    private var selectedPeriod: TransactionPeriodSummary? {
+        guard let selectedCycleStart else { return nil }
+        return periods.first {
+            Calendar.current.isDate($0.cycle.start, inSameDayAs: selectedCycleStart)
+        }
+    }
+
     private var filteredTransactions: [Transaction] {
         let matching = transactions
             .filter(matchesSearch)
             .filter(matchesFilters)
-        let visible = cycleFilter == .all
+        let visible = cycleFilter == .all && selectedPeriod == nil
             ? TransactionActivity.purchaseRepresentatives(from: matching)
             : matching
         return visible.sorted(by: sortTransactions)
     }
 
+    private var groupedTransactions: [TransactionDateGroup] {
+        let grouped = Dictionary(grouping: filteredTransactions) {
+            Calendar.current.startOfDay(for: $0.date)
+        }
+        return grouped.map {
+            TransactionDateGroup(date: $0.key, transactions: $0.value)
+        }
+        .sorted { $0.date > $1.date }
+    }
+
     var body: some View {
         List {
+            Section {
+                TransactionPeriodChart(
+                    periods: periods,
+                    selectedCycleStart: $selectedCycleStart
+                )
+                if let selectedPeriod {
+                    PeriodSummaryView(summary: selectedPeriod)
+                } else {
+                    Text("All Activity")
+                        .font(.headline)
+                }
+            } header: {
+                HStack {
+                    Text(selectedPeriod.map(periodLabel) ?? AppLocalization.string("All Activity"))
+                    Spacer()
+                    if selectedPeriod != nil {
+                        Button("All Activity") {
+                            selectedCycleStart = nil
+                            cycleFilter = .all
+                        }
+                        .textCase(nil)
+                    }
+                }
+            }
+
             if filteredTransactions.isEmpty {
                 ContentUnavailableView.search(text: searchText)
             } else {
-                ForEach(filteredTransactions) { transaction in
-                    NavigationLink {
-                        TransactionDetailView(transaction: transaction)
-                    } label: {
-                        TransactionRow(transaction: transaction)
-                    }
-                    .swipeActions {
-                        Button("Delete", systemImage: "trash", role: .destructive) {
-                            transactionToDelete = transaction
+                ForEach(groupedTransactions, id: \.date) { group in
+                    Section(groupTitle(for: group.date)) {
+                        ForEach(group.transactions) { transaction in
+                            NavigationLink {
+                                TransactionDetailView(transaction: transaction)
+                            } label: {
+                                TransactionRow(transaction: transaction)
+                            }
+                            .swipeActions {
+                                Button("Delete", systemImage: "trash", role: .destructive) {
+                                    transactionToDelete = transaction
+                                }
+                            }
                         }
                     }
                 }
@@ -111,6 +163,28 @@ struct TransactionsView: View {
         }
         .navigationTitle("Transactions")
         .searchable(text: $searchText, prompt: "Title, category, or notes")
+        .onChange(of: selectedCycleStart) {
+            guard let selectedCycleStart,
+                  let nearest = periods.min(by: {
+                      abs($0.cycle.start.timeIntervalSince(selectedCycleStart))
+                          < abs($1.cycle.start.timeIntervalSince(selectedCycleStart))
+                  }) else {
+                return
+            }
+            self.selectedCycleStart = nearest.cycle.start
+            cycleFilter = .all
+        }
+        .onChange(of: cycleFilter) {
+            guard let current = FinancialCycle(containing: .now) else { return }
+            switch cycleFilter {
+            case .current:
+                selectedCycleStart = current.start
+            case .previous:
+                selectedCycleStart = current.shifted(byMonths: -1)?.start
+            case .all:
+                break
+            }
+        }
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
                 Menu("Sort", systemImage: "arrow.up.arrow.down") {
@@ -139,11 +213,11 @@ struct TransactionsView: View {
             )
         }
         .confirmationDialog(
-            transactionToDelete?.sourcePurchaseID == nil ? "Delete Transaction?" : "Delete Entire Installment Purchase?",
+            transactionToDelete?.sourceKind != .installment ? "Delete Transaction?" : "Delete Entire Installment Purchase?",
             isPresented: Binding(get: { transactionToDelete != nil }, set: { if !$0 { transactionToDelete = nil } }),
             titleVisibility: .visible
         ) {
-            Button(transactionToDelete?.sourcePurchaseID == nil ? "Delete Transaction" : "Delete Entire Purchase", role: .destructive) {
+            Button(transactionToDelete?.sourceKind != .installment ? "Delete Transaction" : "Delete Entire Purchase", role: .destructive) {
                 deleteSelectedTransaction()
             }
             Button("Cancel", role: .cancel) { transactionToDelete = nil }
@@ -162,15 +236,22 @@ struct TransactionsView: View {
             || transaction.notes.localizedCaseInsensitiveContains(query)
             || (transaction.category?.name.localizedCaseInsensitiveContains(query) ?? false)
             || (transaction.category?.displayName().localizedCaseInsensitiveContains(query) ?? false)
+            || (transaction.category?.displayName().localizedCaseInsensitiveContains(query) ?? false)
     }
 
     private func matchesFilters(_ transaction: Transaction) -> Bool {
         if typeFilter == .income, transaction.type != .income { return false }
         if typeFilter == .expense, transaction.type != .expense { return false }
+        if typeFilter == .investment, transaction.type != .investment { return false }
+        if let selectedPeriod,
+           !selectedPeriod.cycle.contains(transaction.effectiveFinancialDate) {
+            return false
+        }
         if let categoryID, transaction.category?.id != categoryID { return false }
         if let paymentMethod, transaction.paymentMethod != paymentMethod { return false }
         if let creditCardID, transaction.creditCard?.id != creditCardID { return false }
         let classification = SpendingClassification.classify(transaction)
+        if spendingKind != .all, transaction.type != .expense { return false }
         if spendingKind == .fixed, classification != .fixedOrRecurring { return false }
         if spendingKind == .variable, classification != .variable { return false }
         guard cycleFilter != .all else { return true }
@@ -186,6 +267,32 @@ struct TransactionsView: View {
         case .amountDescending: lhs.amount > rhs.amount
         case .amountAscending: lhs.amount < rhs.amount
         }
+    }
+
+    private func periodLabel(_ summary: TransactionPeriodSummary) -> String {
+        let end = Calendar.current.date(byAdding: .day, value: -1, to: summary.cycle.end)
+            ?? summary.cycle.end
+        let format = Date.FormatStyle.dateTime
+            .month(.abbreviated)
+            .day()
+            .locale(AppLocalization.selectedLocale)
+        return "\(summary.cycle.start.formatted(format)) – \(end.formatted(format))"
+    }
+
+    private func groupTitle(for date: Date) -> String {
+        if Calendar.current.isDateInToday(date) {
+            return AppLocalization.string("Today")
+        }
+        if Calendar.current.isDateInYesterday(date) {
+            return AppLocalization.string("Yesterday")
+        }
+        return date.formatted(
+            .dateTime
+                .day()
+                .month(.wide)
+                .year()
+                .locale(AppLocalization.selectedLocale)
+        )
     }
 
     private var deletionMessage: LocalizedStringResource {
@@ -217,6 +324,54 @@ struct TransactionsView: View {
         creditCardID = nil
         spendingKind = .all
         cycleFilter = .all
+    }
+}
+
+private struct TransactionDateGroup {
+    let date: Date
+    let transactions: [Transaction]
+}
+
+private struct PeriodSummaryView: View {
+    let summary: TransactionPeriodSummary
+
+    var body: some View {
+        Grid(alignment: .leading, horizontalSpacing: 18, verticalSpacing: 8) {
+            GridRow {
+                metric("Income", amount: summary.income)
+                metric("Expenses", amount: summary.expenses)
+            }
+            GridRow {
+                metric("Investments", amount: summary.investments)
+                metric("Balance", amount: summary.balance)
+            }
+            GridRow {
+                metric(
+                    "Available After Investments",
+                    amount: summary.availableAfterInvestments
+                )
+                .gridCellColumns(2)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func metric(
+        _ title: LocalizedStringResource,
+        amount: Decimal
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            Text(
+                amount,
+                format: .currency(code: "BRL")
+                    .locale(AppLocalization.selectedLocale)
+            )
+            .fontWeight(.semibold)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 

@@ -21,6 +21,12 @@ enum RecurringTransactionGenerator {
         let todayStart = calendar.startOfDay(for: today)
 
         for rule in rules where rule.isActive {
+            // A card rule without its card cannot be charged anywhere; leave it
+            // untouched instead of silently generating a different method.
+            if rule.paymentMethod == .creditCard && rule.creditCard == nil {
+                continue
+            }
+
             guard let startMonth = startOfMonth(
                 containing: rule.startDate,
                 calendar: calendar
@@ -56,17 +62,12 @@ enum RecurringTransactionGenerator {
 
                     if !existingOccurrenceIDs.contains(occurrenceID),
                        !wasPreviouslyGenerated {
-                        modelContext.insert(
-                            Transaction(
-                                title: rule.title,
-                                amount: rule.amount,
-                                date: occurrenceStart,
-                                type: rule.type,
-                                category: rule.category,
-                                notes: rule.notes,
-                                sourceRecurringTransactionID: rule.id,
-                                recurringOccurrenceID: occurrenceID
-                            )
+                        try generateOccurrence(
+                            of: rule,
+                            on: occurrenceStart,
+                            occurrenceID: occurrenceID,
+                            in: modelContext,
+                            calendar: calendar
                         )
                         existingOccurrenceIDs.insert(occurrenceID)
                     }
@@ -91,6 +92,51 @@ enum RecurringTransactionGenerator {
         }
 
         try modelContext.save()
+    }
+
+    /// Card rules become a one-installment card purchase so invoice, limit and
+    /// cycle rules stay in CreditCardPurchaseService; other methods are a
+    /// direct transaction, as before V2.
+    @MainActor
+    private static func generateOccurrence(
+        of rule: RecurringTransaction,
+        on date: Date,
+        occurrenceID: String,
+        in modelContext: ModelContext,
+        calendar: Calendar
+    ) throws {
+        if rule.type == .expense,
+           rule.paymentMethod == .creditCard,
+           let creditCard = rule.creditCard {
+            try CreditCardPurchaseService.createPurchase(
+                title: rule.title,
+                totalAmount: rule.amount,
+                purchaseDate: date,
+                category: rule.category,
+                notes: rule.notes,
+                creditCard: creditCard,
+                installmentCount: 1,
+                sourceRecurringTransactionID: rule.id,
+                recurringOccurrenceID: occurrenceID,
+                in: modelContext,
+                calendar: calendar
+            )
+            return
+        }
+
+        modelContext.insert(
+            Transaction(
+                title: rule.title,
+                amount: rule.amount,
+                date: date,
+                type: rule.type,
+                category: rule.category,
+                notes: rule.notes,
+                sourceRecurringTransactionID: rule.id,
+                recurringOccurrenceID: occurrenceID,
+                paymentMethod: rule.type == .income ? .debit : rule.paymentMethod.directOrDebit
+            )
+        )
     }
 
     static func occurrenceDate(

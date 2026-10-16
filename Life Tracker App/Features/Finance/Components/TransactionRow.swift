@@ -11,6 +11,14 @@ struct TransactionRow: View {
         return sign + formattedAmount
     }
 
+    private var amountTint: Color {
+        switch transaction.type {
+        case .income: .green
+        case .expense: .red
+        case .investment: .indigo
+        }
+    }
+
     var body: some View {
         HStack(spacing: 12) {
             CategoryIcon(
@@ -61,9 +69,16 @@ struct TransactionRow: View {
 
             Spacer()
 
-            Text(signedAmount)
-                .fontWeight(.semibold)
-                .foregroundStyle(transaction.type == .income ? .green : .red)
+            VStack(alignment: .trailing, spacing: 2) {
+                Text(signedAmount)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(amountTint)
+                if transaction.type == .investment {
+                    Text("Invested")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
         }
         .accessibilityElement(children: .combine)
     }

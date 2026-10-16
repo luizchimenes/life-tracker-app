@@ -197,6 +197,20 @@ struct FinancialCycleReport {
         ReportChange(current: snapshot.expenses, previous: previousSnapshot.expenses)
     }
 
+    var investmentChange: ReportChange {
+        ReportChange(
+            current: snapshot.investments,
+            previous: previousSnapshot.investments
+        )
+    }
+
+    var investmentPercentageOfIncome: Double? {
+        guard snapshot.income > 0 else { return nil }
+        return NSDecimalNumber(
+            decimal: snapshot.investments / snapshot.income
+        ).doubleValue
+    }
+
     var balanceChange: ReportChange {
         ReportChange(current: snapshot.balance, previous: previousSnapshot.balance)
     }
@@ -310,6 +324,7 @@ struct FinancialCycleReport {
         comparisons = [
             CycleMetricComparison(id: "income", title: AppLocalization.string("Income"), change: ReportChange(current: snapshot.income, previous: previousSnapshot.income)),
             CycleMetricComparison(id: "expenses", title: AppLocalization.string("Expenses"), change: ReportChange(current: snapshot.expenses, previous: previousSnapshot.expenses)),
+            CycleMetricComparison(id: "investments", title: AppLocalization.string("Investments"), change: ReportChange(current: snapshot.investments, previous: previousSnapshot.investments)),
             CycleMetricComparison(id: "balance", title: AppLocalization.string("Balance"), change: ReportChange(current: snapshot.balance, previous: previousSnapshot.balance)),
             CycleMetricComparison(id: "fixed", title: AppLocalization.string("Fixed / Recurring"), change: ReportChange(current: currentAnalytics.fixedOrRecurringExpenses, previous: previousFixed)),
             CycleMetricComparison(id: "variable", title: AppLocalization.string("Variable Spending"), change: ReportChange(current: currentAnalytics.variableExpenses, previous: previousVariable)),

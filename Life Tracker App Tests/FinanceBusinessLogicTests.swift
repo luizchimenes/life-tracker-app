@@ -404,6 +404,105 @@ struct DeletionTests {
     }
 }
 
+@Suite("Investments and transaction periods")
+struct InvestmentTests {
+    @Test @MainActor func investmentPersistsAsSeparateFlow() throws {
+        let context = try TestStore.context()
+        let investments = TransactionCategory(
+            name: "Investments",
+            iconName: "chart.line.uptrend.xyaxis",
+            colorName: "indigo",
+            type: .investment
+        )
+        let transaction = Transaction(
+            title: "CDB",
+            amount: 4_000,
+            date: date(2026, 10, 14),
+            type: .investment,
+            category: investments,
+            paymentMethod: .pix
+        )
+        context.insert(investments)
+        context.insert(transaction)
+        try context.save()
+
+        let persisted = try #require(context.fetch(FetchDescriptor<Transaction>()).first)
+        #expect(persisted.type == .investment)
+        #expect(persisted.amount == 4_000)
+        #expect(persisted.effectiveFinancialDate == persisted.date)
+    }
+
+    @Test func investmentsStayOutOfExpensesAndBudgets() {
+        let incomeCategory = TransactionCategory(
+            name: "Salary",
+            iconName: "banknote.fill",
+            colorName: "green",
+            type: .income
+        )
+        let expenseCategory = category()
+        let investmentCategory = TransactionCategory(
+            name: "Investments",
+            iconName: "chart.line.uptrend.xyaxis",
+            colorName: "indigo",
+            type: .investment
+        )
+        let income = Transaction(title: "Salary", amount: 14_000, date: date(2026, 10, 9), type: .income, category: incomeCategory)
+        let expense = Transaction(title: "Rent", amount: 5_000, date: date(2026, 10, 10), type: .expense, category: expenseCategory)
+        let investment = Transaction(title: "ETF", amount: 4_000, date: date(2026, 10, 14), type: .investment, category: investmentCategory, paymentMethod: .pix)
+        let snapshot = MonthlyFinanceSnapshot(
+            transactions: [income, expense, investment],
+            date: date(2026, 10, 20),
+            calendar: testCalendar
+        )
+        let analytics = MonthlyFinanceAnalytics(
+            transactions: [income, expense, investment],
+            recurringTransactions: [],
+            categoryBudgets: [CategoryBudget(category: expenseCategory, monthlyLimit: 6_000)],
+            monthlyBudget: 7_000,
+            date: date(2026, 10, 20),
+            calendar: testCalendar
+        )
+
+        #expect(snapshot.income == 14_000)
+        #expect(snapshot.expenses == 5_000)
+        #expect(snapshot.investments == 4_000)
+        #expect(snapshot.balance == 9_000)
+        #expect(snapshot.availableAfterInvestments == 5_000)
+        #expect(snapshot.expenses(for: expenseCategory) == 5_000)
+        #expect(snapshot.expenses(for: investmentCategory) == 0)
+        #expect(analytics.fixedOrRecurringExpenses + analytics.variableExpenses == 5_000)
+        #expect(analytics.categorySpending.reduce(0) { $0 + $1.amount } == 5_000)
+    }
+
+    @Test func cyclePeriodsAndReportInvestmentsReconcile() throws {
+        let investmentCategory = TransactionCategory(
+            name: "Investments",
+            iconName: "chart.line.uptrend.xyaxis",
+            colorName: "indigo",
+            type: .investment
+        )
+        let previous = Transaction(title: "Savings", amount: 3_000, date: date(2026, 10, 8), type: .investment, category: investmentCategory)
+        let current = Transaction(title: "CDB", amount: 4_000, date: date(2026, 10, 9), type: .investment, category: investmentCategory)
+        let cycle = try #require(FinancialCycle(containing: date(2026, 10, 20), calendar: testCalendar))
+        let currentPeriod = TransactionPeriodSummary(cycle: cycle, transactions: [previous, current])
+        let report = try #require(FinancialCycleReport(
+            cycle: cycle,
+            transactions: [previous, current],
+            categoryBudgets: [],
+            monthlyBudget: nil,
+            fixedBillOccurrences: [],
+            calendar: testCalendar
+        ))
+
+        #expect(currentPeriod.transactions.map(\.id) == [current.id])
+        #expect(currentPeriod.investments == 4_000)
+        #expect(report.snapshot.investments == 4_000)
+        #expect(report.previousSnapshot.investments == 3_000)
+        #expect(report.investmentChange.difference == 1_000)
+        #expect(abs((report.investmentChange.percentage ?? 0) - (1.0 / 3.0)) < 0.000_001)
+    }
+}
+
 @Suite("Reporting reconciliation")
 struct ReportingTests {
     @Test func reportBreakdownsReconcile() throws {

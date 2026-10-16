@@ -8,7 +8,7 @@ struct MarkBillPaidView: View {
 
     let occurrence: FixedBillOccurrence
 
-    @State private var actualAmount: Decimal
+    @State private var actualAmount: Decimal?
     @State private var paidDate = Date.now
     @State private var paymentMethod: PaymentMethod
     @State private var selectedCategoryID: UUID?
@@ -57,20 +57,9 @@ struct MarkBillPaidView: View {
                     HStack {
                         Text("Amount Paid")
                         Spacer()
-                        Text("R$")
-                            .foregroundStyle(.secondary)
-                        TextField(
-                            "0,00",
-                            value: $actualAmount,
-                            format: .number
-                                .locale(AppLocalization.selectedLocale)
-                                .precision(.fractionLength(0...2))
-                        )
-                        .multilineTextAlignment(.trailing)
-                        .frame(maxWidth: 120)
-#if os(iOS)
-                        .keyboardType(.decimalPad)
-#endif
+                        MoneyField("R$ 0,00", amount: $actualAmount)
+                            .multilineTextAlignment(.trailing)
+                            .frame(maxWidth: 150)
                     }
 
                     DatePicker(
@@ -111,7 +100,7 @@ struct MarkBillPaidView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Confirm Payment", action: confirmPayment)
-                        .disabled(actualAmount <= 0 || selectedCategory == nil)
+                        .disabled((actualAmount ?? 0) <= 0 || selectedCategory == nil)
                 }
             }
             .alert("Unable to Confirm Payment", isPresented: $showsPaymentError) {
@@ -126,7 +115,9 @@ struct MarkBillPaidView: View {
     }
 
     private func confirmPayment() {
-        guard let selectedCategory else { return }
+        guard let selectedCategory,
+              let actualAmount,
+              actualAmount > 0 else { return }
 
         do {
             try FixedBillPaymentService.markPaid(

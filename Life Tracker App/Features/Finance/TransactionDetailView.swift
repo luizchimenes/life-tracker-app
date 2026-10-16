@@ -177,11 +177,11 @@ struct TransactionDetailView: View {
     }
 
     private var deleteTitle: LocalizedStringResource {
-        transaction.sourcePurchaseID == nil ? "Delete Transaction?" : "Delete Entire Installment Purchase?"
+        transaction.sourceKind != .installment ? "Delete Transaction?" : "Delete Entire Installment Purchase?"
     }
 
     private var deleteButtonTitle: LocalizedStringResource {
-        transaction.sourcePurchaseID == nil ? "Delete Transaction" : "Delete Entire Purchase"
+        transaction.sourceKind != .installment ? "Delete Transaction" : "Delete Entire Purchase"
     }
 
     private var deleteMessage: LocalizedStringResource {

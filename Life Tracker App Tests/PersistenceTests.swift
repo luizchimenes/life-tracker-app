@@ -21,6 +21,8 @@ struct PersistenceTests {
     @Test func currentSchemaContainsEveryPersistedModel() {
         #expect(Set(LifeTrackerPersistence.schema.entities.map(\.name)) == expectedEntities)
         #expect(LifeTrackerSchemaV1.versionIdentifier == Schema.Version(1, 0, 0))
+        #expect(LifeTrackerSchemaV2.versionIdentifier == Schema.Version(2, 0, 0))
+        #expect(Set(Schema(versionedSchema: LifeTrackerSchemaV1.self).entities.map(\.name)) == expectedEntities)
     }
 
     @Test func migrationPlanEndsAtCurrentSchema() throws {
@@ -42,29 +44,62 @@ struct PersistenceTests {
         try Fixture.verify(ModelContext(context.container))
     }
 
-    /// The app used an unversioned container before `LifeTrackerSchemaV1`.
-    /// A store written that way must reopen with the plan, data intact.
-    @Test func unversionedStoreReopensWithMigrationPlan() throws {
+    /// Before versioning the app opened an unversioned container; later builds
+    /// opened it as V1. Both kinds of store must migrate to the current schema
+    /// with every model and relationship intact.
+    @Test(arguments: [false, true])
+    func v1StoreMigratesToCurrentSchema(versioned: Bool) throws {
         let directory = FileManager.default.temporaryDirectory
-            .appending(path: "LifeTrackerLegacyStore-\(UUID().uuidString)")
+            .appending(path: "LifeTrackerV1Store-\(UUID().uuidString)")
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: directory) }
         let storeURL = directory.appending(path: "default.store")
 
         try autoreleasepool {
-            let legacySchema = Schema(LifeTrackerSchemaV1.models)
-            let legacy = try ModelContainer(
-                for: legacySchema,
-                configurations: [ModelConfiguration(schema: legacySchema, url: storeURL)]
+            let v1Schema = versioned
+                ? Schema(versionedSchema: LifeTrackerSchemaV1.self)
+                : Schema(LifeTrackerSchemaV1.models)
+            let v1 = try ModelContainer(
+                for: v1Schema,
+                configurations: [ModelConfiguration(schema: v1Schema, url: storeURL)]
             )
-            let context = ModelContext(legacy)
-            Fixture.insert(into: context)
+            let context = ModelContext(v1)
+            FixtureV1.insert(into: context)
             try context.save()
         }
 
+        let migrated = ModelContext(try LifeTrackerPersistence.makeContainer(storeURL: storeURL))
+        try Fixture.verify(migrated)
+
+        // Rules created before V2 keep their previous behavior: Debit, no card.
+        let rule = try #require(try migrated.fetch(FetchDescriptor<RecurringTransaction>()).first)
+        #expect(rule.paymentMethodRawValue == nil)
+        #expect(rule.paymentMethod == .debit)
+        #expect(rule.creditCard == nil)
+
+        // Reopening an already migrated store keeps working.
         try Fixture.verify(ModelContext(try LifeTrackerPersistence.makeContainer(storeURL: storeURL)))
-        // Reopening a store already opened with the plan keeps working.
-        try Fixture.verify(ModelContext(try LifeTrackerPersistence.makeContainer(storeURL: storeURL)))
+    }
+}
+
+/// The same data set written with the frozen V1 types, for migration tests.
+@MainActor
+enum FixtureV1 {
+    static func insert(into context: ModelContext) {
+        typealias V1 = LifeTrackerSchemaV1
+        let food = V1.TransactionCategory(name: "Food", iconName: "fork.knife", colorName: "orange", type: .expense, isDefault: true)
+        let card = V1.CreditCard(name: "Card", lastFourDigits: "1234", closingDay: 9, dueDay: 15, creditLimit: 1_000)
+        let invoice = V1.CreditCardInvoice(invoiceIdentifier: "card-2026-11", creditCard: card, referenceMonth: .distantPast, closingDate: .distantPast, dueDate: .distantPast)
+        let bill = V1.FixedBill(name: "Rent", category: food, dueDay: 10, estimatedAmount: 900, amountMode: .fixed, startDate: .distantPast, createdAt: .distantPast)
+        context.insert(food)
+        context.insert(card)
+        context.insert(invoice)
+        context.insert(bill)
+        context.insert(V1.Transaction(title: "Lunch", amount: 25, date: .distantPast, type: .expense, category: food, paymentMethodRawValue: PaymentMethod.creditCard.rawValue, creditCard: card, creditCardInvoice: invoice, installmentNumber: 1, totalInstallments: 2))
+        context.insert(V1.CategoryBudget(category: food, monthlyLimit: 500))
+        context.insert(V1.FinanceSettings(monthlySpendingBudget: 2_000))
+        context.insert(V1.RecurringTransaction(title: "Gym", amount: 100, type: .expense, category: food, startDate: .distantPast, dayOfMonth: 5))
+        context.insert(V1.FixedBillOccurrence(occurrenceIdentifier: "rent-2026-10", fixedBill: bill, dueDate: .distantPast, financialCycleIdentifier: "2026-10-9"))
     }
 }
 

@@ -11,6 +11,8 @@ enum CreditCardPurchaseService {
         notes: String,
         creditCard: CreditCard,
         installmentCount: Int,
+        sourceRecurringTransactionID: UUID? = nil,
+        recurringOccurrenceID: String? = nil,
         in modelContext: ModelContext,
         calendar: Calendar = .current
     ) throws {
@@ -38,6 +40,8 @@ enum CreditCardPurchaseService {
                     type: .expense,
                     category: category,
                     notes: notes,
+                    sourceRecurringTransactionID: sourceRecurringTransactionID,
+                    recurringOccurrenceID: recurringOccurrenceID,
                     paymentMethod: .creditCard,
                     creditCard: creditCard,
                     creditCardInvoice: invoice,

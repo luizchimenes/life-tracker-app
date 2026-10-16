@@ -4,6 +4,7 @@ import SwiftData
 enum TransactionCategoryType: String, Codable, CaseIterable, Identifiable {
     case income
     case expense
+    case investment
     case both
 
     var id: Self { self }
@@ -14,6 +15,8 @@ enum TransactionCategoryType: String, Codable, CaseIterable, Identifiable {
             "Income"
         case .expense:
             "Expense"
+        case .investment:
+            "Investment"
         case .both:
             "Both"
         }
@@ -21,7 +24,11 @@ enum TransactionCategoryType: String, Codable, CaseIterable, Identifiable {
 
     func supports(_ transactionType: TransactionType) -> Bool {
         switch (self, transactionType) {
-        case (.both, _), (.income, .income), (.expense, .expense):
+        case (.both, .income),
+             (.both, .expense),
+             (.income, .income),
+             (.expense, .expense),
+             (.investment, .investment):
             true
         default:
             false
@@ -76,7 +83,9 @@ extension TransactionCategory {
         case "Other": "Other"
         case "Salary": "Salary"
         case "Freelance": "Freelance"
-        case "Investments": "Investments"
+        // Two built-ins share this stored name: the income one is returns on
+        // investments, the investment one is money actually invested.
+        case "Investments": type == .income ? "Investment Income" : "Investments"
         case "Refund": "Refund"
         case "Other Income": "Other Income"
         default: nil
@@ -99,7 +108,8 @@ extension TransactionCategory {
         TransactionCategory(name: "Freelance", iconName: "laptopcomputer", colorName: "blue", type: .income, isDefault: true),
         TransactionCategory(name: "Investments", iconName: "chart.line.uptrend.xyaxis", colorName: "green", type: .income, isDefault: true),
         TransactionCategory(name: "Refund", iconName: "arrow.uturn.backward.circle.fill", colorName: "orange", type: .income, isDefault: true),
-        TransactionCategory(name: "Other Income", iconName: "plus.circle.fill", colorName: "mint", type: .income, isDefault: true)
+        TransactionCategory(name: "Other Income", iconName: "plus.circle.fill", colorName: "mint", type: .income, isDefault: true),
+        TransactionCategory(name: "Investments", iconName: "chart.line.uptrend.xyaxis", colorName: "indigo", type: .investment, isDefault: true)
     ] }
 
     @MainActor
@@ -108,18 +118,18 @@ extension TransactionCategory {
 
         let existingCategories = try modelContext.fetch(descriptor)
 
-        if existingCategories.isEmpty {
-            for category in makeDefaults() {
-                modelContext.insert(category)
-            }
-        } else if !existingCategories.contains(where: \.isDefault) {
-            let defaults = makeDefaults()
+        let defaults = makeDefaults()
 
-            for category in existingCategories {
-                category.isDefault = defaults.contains {
-                    $0.name == category.name && $0.type == category.type
-                }
+        for category in existingCategories where !category.isDefault {
+            category.isDefault = defaults.contains {
+                $0.name == category.name && $0.type == category.type
             }
+        }
+
+        for defaultCategory in defaults where !existingCategories.contains(where: {
+            $0.name == defaultCategory.name && $0.type == defaultCategory.type
+        }) {
+            modelContext.insert(defaultCategory)
         }
 
         try modelContext.save()

@@ -56,16 +56,7 @@ struct AddCreditCardView: View {
                             )
                         }
 
-                    TextField(
-                        "Credit Limit (R$)",
-                        value: $creditLimit,
-                        format: .number
-                            .locale(AppLocalization.selectedLocale)
-                            .precision(.fractionLength(0...2))
-                    )
-#if os(iOS)
-                    .keyboardType(.decimalPad)
-#endif
+                    MoneyField("Credit Limit", amount: $creditLimit)
 
                     Stepper(
                         "Closing Day: \(closingDay)",

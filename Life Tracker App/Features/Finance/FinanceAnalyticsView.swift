@@ -46,6 +46,11 @@ struct FinanceAnalyticsView: View {
                 tint: .red
             ),
             SummaryItem(
+                title: "Investments",
+                amount: analytics.projection.actual.investments,
+                tint: .indigo
+            ),
+            SummaryItem(
                 title: "Projected Expenses",
                 amount: analytics.projection.projectedExpenses,
                 tint: .orange

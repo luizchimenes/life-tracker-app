@@ -46,10 +46,7 @@ struct EditTransactionView: View {
             Form {
                 Section("Transaction") {
                     TextField("Title", text: $title)
-                    TextField("Amount", value: $amount, format: .number.locale(AppLocalization.selectedLocale).precision(.fractionLength(0...2)))
-#if os(iOS)
-                        .keyboardType(.decimalPad)
-#endif
+                    MoneyField("Amount", amount: $amount)
                     DatePicker("Transaction Date", selection: $date, displayedComponents: .date)
                     Picker("Category", selection: $selectedCategoryID) {
                         ForEach(compatibleCategories) { category in
@@ -57,7 +54,7 @@ struct EditTransactionView: View {
                                 .tag(Optional(category.id))
                         }
                     }
-                    if transaction.type == .expense {
+                    if transaction.type != .income {
                         Picker("Payment Method", selection: $paymentMethod) {
                             ForEach(PaymentMethod.allCases.filter(\.isDirectPayment)) { method in
                                 Text(method.displayName).tag(method)
@@ -89,7 +86,7 @@ struct EditTransactionView: View {
         transaction.date = date
         transaction.category = selectedCategory
         transaction.notes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
-        transaction.paymentMethod = transaction.type == .expense ? paymentMethod : .debit
+        transaction.paymentMethod = transaction.type == .income ? .debit : paymentMethod
         do {
             try modelContext.save()
             dismiss()

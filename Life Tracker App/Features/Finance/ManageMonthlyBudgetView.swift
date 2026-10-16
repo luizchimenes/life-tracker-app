@@ -15,22 +15,8 @@ struct ManageMonthlyBudgetView: View {
         NavigationStack {
             Form {
                 Section {
-                    HStack(spacing: 8) {
-                        Text("R$")
-                            .foregroundStyle(.secondary)
-
-                        TextField(
-                            "0,00",
-                            value: $monthlyBudget,
-                            format: .number
-                                .locale(AppLocalization.selectedLocale)
-                                .precision(.fractionLength(0...2))
-                        )
+                    MoneyField("R$ 0,00", amount: $monthlyBudget)
                         .multilineTextAlignment(.trailing)
-#if os(iOS)
-                        .keyboardType(.decimalPad)
-#endif
-                    }
                 } header: {
                     Text("Financial Cycle Spending Budget")
                 } footer: {

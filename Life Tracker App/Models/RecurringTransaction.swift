@@ -27,6 +27,18 @@ final class RecurringTransaction {
     var dayOfMonth: Int
     var isActive: Bool
     var lastGeneratedDate: Date?
+    // Added in V2. nil means a rule created before V2, which generated Debit.
+    var paymentMethodRawValue: String?
+    var creditCard: CreditCard?
+
+    var paymentMethod: PaymentMethod {
+        get {
+            paymentMethodRawValue.flatMap(PaymentMethod.init(rawValue:)) ?? .debit
+        }
+        set {
+            paymentMethodRawValue = newValue.rawValue
+        }
+    }
 
     init(
         id: UUID = UUID(),
@@ -39,7 +51,9 @@ final class RecurringTransaction {
         frequency: RecurringFrequency = .monthly,
         dayOfMonth: Int,
         isActive: Bool = true,
-        lastGeneratedDate: Date? = nil
+        lastGeneratedDate: Date? = nil,
+        paymentMethod: PaymentMethod = .debit,
+        creditCard: CreditCard? = nil
     ) {
         self.id = id
         self.title = title
@@ -52,5 +66,7 @@ final class RecurringTransaction {
         self.dayOfMonth = min(max(dayOfMonth, 1), 31)
         self.isActive = isActive
         self.lastGeneratedDate = lastGeneratedDate
+        paymentMethodRawValue = paymentMethod.rawValue
+        self.creditCard = paymentMethod == .creditCard ? creditCard : nil
     }
 }

@@ -8,7 +8,7 @@ struct AddTransactionView: View {
     @Query(sort: \CreditCard.name) private var creditCards: [CreditCard]
 
     @State private var title = ""
-    @State private var amount: Decimal = 0
+    @State private var amount: Decimal?
     @State private var type = TransactionType.expense
     @State private var selectedCategoryID: UUID?
     @State private var date = Date.now
@@ -23,8 +23,8 @@ struct AddTransactionView: View {
     private var canSave: Bool {
         !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && selectedCategory != nil
-            && amount != 0
-            && (paymentMethod != .creditCard || selectedCreditCard != nil)
+            && (amount ?? 0) > 0
+            && (type != .expense || paymentMethod != .creditCard || selectedCreditCard != nil)
     }
 
     private var compatibleCategories: [TransactionCategory] {
@@ -49,16 +49,7 @@ struct AddTransactionView: View {
                 Section("Details") {
                     TextField("Title", text: $title)
 
-                    TextField(
-                        "Amount",
-                        value: $amount,
-                        format: .number
-                            .locale(AppLocalization.selectedLocale)
-                            .precision(.fractionLength(0...2))
-                    )
-#if os(iOS)
-                    .keyboardType(.decimalPad)
-#endif
+                    MoneyField("Amount", amount: $amount)
 
                     Picker("Type", selection: $type) {
                         ForEach(TransactionType.allCases) { transactionType in
@@ -84,9 +75,11 @@ struct AddTransactionView: View {
                     }
                     DatePicker("Date", selection: $date, displayedComponents: .date)
 
-                    if type == .expense {
+                    if type != .income {
                         Picker("Payment Method", selection: $paymentMethod) {
-                            ForEach(PaymentMethod.allCases) { method in
+                            ForEach(PaymentMethod.allCases.filter {
+                                type == .expense || $0.isDirectPayment
+                            }) { method in
                                 Text(method.displayName)
                                     .tag(method)
                             }
@@ -146,8 +139,9 @@ struct AddTransactionView: View {
                 selectFirstCompatibleCategoryIfNeeded()
             }
             .onChange(of: type) {
-                if type == .income {
+                if type == .income || paymentMethod == .creditCard {
                     paymentMethod = .debit
+                    usesInstallments = false
                 }
             }
             .onAppear(perform: selectFirstCreditCardIfNeeded)
@@ -169,6 +163,8 @@ struct AddTransactionView: View {
             let trimmedNotes = notes.trimmingCharacters(
                 in: .whitespacesAndNewlines
             )
+
+            guard let amount, amount > 0 else { return }
 
             if type == .expense,
                paymentMethod == .creditCard,
@@ -192,9 +188,9 @@ struct AddTransactionView: View {
                         type: type,
                         category: selectedCategory,
                         notes: trimmedNotes,
-                        paymentMethod: type == .expense
-                            ? paymentMethod
-                            : .debit
+                        paymentMethod: type == .income
+                            ? .debit
+                            : paymentMethod
                     )
                 )
                 try modelContext.save()

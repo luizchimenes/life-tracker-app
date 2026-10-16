@@ -59,6 +59,10 @@ enum TransactionActivity {
 
 enum TransactionAmountPresentation {
     static func sign(for type: TransactionType) -> String {
-        type == .income ? "+" : "−"
+        switch type {
+        case .income: "+"
+        case .expense: "−"
+        case .investment: ""
+        }
     }
 }

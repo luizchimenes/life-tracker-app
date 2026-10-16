@@ -6,6 +6,7 @@ struct AddRecurringTransactionView: View {
     @Environment(\.modelContext) private var modelContext
 
     @Query(sort: \TransactionCategory.name) private var categories: [TransactionCategory]
+    @Query(sort: \CreditCard.name) private var creditCards: [CreditCard]
 
     private let recurringTransaction: RecurringTransaction?
 
@@ -18,6 +19,8 @@ struct AddRecurringTransactionView: View {
     @State private var frequency: RecurringFrequency
     @State private var dayOfMonth: Int
     @State private var isActive: Bool
+    @State private var paymentMethod: PaymentMethod
+    @State private var selectedCreditCardID: UUID?
     @State private var showsSaveError = false
     @State private var saveErrorMessage = ""
 
@@ -29,10 +32,23 @@ struct AddRecurringTransactionView: View {
         compatibleCategories.first { $0.id == selectedCategoryID }
     }
 
+    private var activeCreditCards: [CreditCard] {
+        creditCards.filter { $0.isActive || $0.id == recurringTransaction?.creditCard?.id }
+    }
+
+    private var selectedCreditCard: CreditCard? {
+        activeCreditCards.first { $0.id == selectedCreditCardID }
+    }
+
+    private var usesCreditCard: Bool {
+        type == .expense && paymentMethod == .creditCard
+    }
+
     private var canSave: Bool {
         !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && amount != 0
             && selectedCategory != nil
+            && (!usesCreditCard || selectedCreditCard != nil)
     }
 
     init(recurringTransaction: RecurringTransaction? = nil) {
@@ -53,6 +69,8 @@ struct AddRecurringTransactionView: View {
                 ?? Calendar.current.component(.day, from: .now)
         )
         _isActive = State(initialValue: recurringTransaction?.isActive ?? true)
+        _paymentMethod = State(initialValue: recurringTransaction?.paymentMethod ?? .debit)
+        _selectedCreditCardID = State(initialValue: recurringTransaction?.creditCard?.id)
     }
 
     var body: some View {
@@ -61,19 +79,10 @@ struct AddRecurringTransactionView: View {
                 Section("Details") {
                     TextField("Title", text: $title)
 
-                    TextField(
-                        "Amount",
-                        value: $amount,
-                        format: .number
-                            .locale(AppLocalization.selectedLocale)
-                            .precision(.fractionLength(0...2))
-                    )
-#if os(iOS)
-                    .keyboardType(.decimalPad)
-#endif
+                    MoneyField("Amount", amount: $amount)
 
                     Picker("Type", selection: $type) {
-                        ForEach(TransactionType.allCases) { transactionType in
+                        ForEach(TransactionType.allCases.filter { $0 != .investment }) { transactionType in
                             Text(transactionType.displayName)
                                 .tag(transactionType)
                         }
@@ -92,6 +101,30 @@ struct AddRecurringTransactionView: View {
                                 Text(category.displayName())
                             }
                             .tag(Optional(category.id))
+                        }
+                    }
+                }
+
+                if type == .expense {
+                    Section {
+                        Picker("Payment Method", selection: $paymentMethod) {
+                            ForEach(PaymentMethod.allCases) { method in
+                                Text(method.displayName).tag(method)
+                            }
+                        }
+                        if paymentMethod == .creditCard {
+                            Picker("Credit Card", selection: $selectedCreditCardID) {
+                                ForEach(activeCreditCards) { card in
+                                    Text("\(card.name) •••• \(card.lastFourDigits)")
+                                        .tag(Optional(card.id))
+                                }
+                            }
+                        }
+                    } header: {
+                        Text("Payment")
+                    } footer: {
+                        if paymentMethod == .creditCard {
+                            Text("Each occurrence is charged once to this card's invoice. Changes apply to future occurrences only.")
                         }
                     }
                 }
@@ -150,6 +183,9 @@ struct AddRecurringTransactionView: View {
             .onChange(of: categories.count) {
                 selectFirstCompatibleCategoryIfNeeded()
             }
+            .onChange(of: paymentMethod) {
+                selectFirstCreditCardIfNeeded()
+            }
             .alert("Unable to Save", isPresented: $showsSaveError) {
                 Button("OK", role: .cancel) {}
             } message: {
@@ -180,6 +216,8 @@ struct AddRecurringTransactionView: View {
             recurringTransaction.frequency = frequency
             recurringTransaction.dayOfMonth = dayOfMonth
             recurringTransaction.isActive = isActive
+            recurringTransaction.paymentMethod = resolvedPaymentMethod
+            recurringTransaction.creditCard = usesCreditCard ? selectedCreditCard : nil
         } else {
             modelContext.insert(
                 RecurringTransaction(
@@ -195,7 +233,9 @@ struct AddRecurringTransactionView: View {
                     startDate: startDate,
                     frequency: frequency,
                     dayOfMonth: dayOfMonth,
-                    isActive: isActive
+                    isActive: isActive,
+                    paymentMethod: resolvedPaymentMethod,
+                    creditCard: usesCreditCard ? selectedCreditCard : nil
                 )
             )
         }
@@ -211,6 +251,18 @@ struct AddRecurringTransactionView: View {
             saveErrorMessage = error.localizedDescription
             showsSaveError = true
         }
+    }
+
+    /// Income always records as Debit, matching rules created before V2.
+    private var resolvedPaymentMethod: PaymentMethod {
+        type == .expense ? paymentMethod : .debit
+    }
+
+    private func selectFirstCreditCardIfNeeded() {
+        guard usesCreditCard, selectedCreditCard == nil else {
+            return
+        }
+        selectedCreditCardID = activeCreditCards.first?.id
     }
 
     private func selectFirstCompatibleCategoryIfNeeded() {

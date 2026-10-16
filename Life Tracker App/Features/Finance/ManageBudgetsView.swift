@@ -29,23 +29,12 @@ struct ManageBudgetsView: View {
 
                     Spacer()
 
-                    HStack(spacing: 4) {
-                        Text("R$")
-                            .foregroundStyle(.secondary)
-
-                        TextField(
-                            "0,00",
-                            value: limitBinding(for: category),
-                            format: .number
-                                .locale(AppLocalization.selectedLocale)
-                                .precision(.fractionLength(0...2))
-                        )
-                        .multilineTextAlignment(.trailing)
-                        .frame(minWidth: 80, idealWidth: 110, maxWidth: 140)
-#if os(iOS)
-                        .keyboardType(.decimalPad)
-#endif
-                    }
+                    MoneyField(
+                        "R$ 0,00",
+                        amount: limitBinding(for: category)
+                    )
+                    .multilineTextAlignment(.trailing)
+                    .frame(minWidth: 100, idealWidth: 130, maxWidth: 160)
                 }
             }
             .navigationTitle("Manage Budgets")

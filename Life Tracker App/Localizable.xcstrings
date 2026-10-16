@@ -1,7 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {},
+    "" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : ""
+          }
+        }
+      }
+    },
     "%@" : {
       "localizations" : {
         "pt-BR" : {
@@ -96,6 +105,16 @@
         }
       }
     },
+    "%@ known" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ conhecidos"
+          }
+        }
+      }
+    },
     "%@ of %@" : {
       "localizations" : {
         "en" : {
@@ -138,6 +157,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ acima do orçamento"
+          }
+        }
+      }
+    },
+    "%@ over the projected budget" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ acima do orçamento projetado"
+          }
+        }
+      }
+    },
+    "%@ over what's projected to be available" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ acima do disponível projetado"
+          }
+        }
+      }
+    },
+    "%@ per day • %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ por dia • %2$@"
           }
         }
       }
@@ -290,6 +339,46 @@
         }
       }
     },
+    "%lld days remaining" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld day remaining"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld days remaining"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld dia restante"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld dias restantes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld fixed commitments remain unpaid." : {
       "localizations" : {
         "en" : {
@@ -416,6 +505,86 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld de %2$lld"
+          }
+        }
+      }
+    },
+    "%lld overdue" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld overdue"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld overdue"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld atrasada"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld atrasadas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld pending" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld pending"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld pending"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld pendente"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld pendentes"
+                }
+              }
+            }
           }
         }
       }
@@ -586,12 +755,42 @@
         }
       }
     },
-    "0,00" : {
+    "+ %lld amounts still unknown" : {
       "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "+ %lld amount still unknown"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "+ %lld amounts still unknown"
+                }
+              }
+            }
+          }
+        },
         "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "0,00"
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "+ %lld valor ainda desconhecido"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "+ %lld valores ainda desconhecidos"
+                }
+              }
+            }
           }
         }
       }
@@ -672,7 +871,7 @@
         }
       }
     },
-    "Actual Spent" : {
+    "Actual Spending" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
@@ -682,12 +881,12 @@
         }
       }
     },
-    "Actual spending" : {
+    "Actual Spent" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gasto atual"
+            "value" : "Gasto Real"
           }
         }
       }
@@ -1002,6 +1201,16 @@
         }
       }
     },
+    "Available After Investments" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disponível após investimentos"
+          }
+        }
+      }
+    },
     "Available limit" : {
       "localizations" : {
         "pt-BR" : {
@@ -1252,6 +1461,16 @@
         }
       }
     },
+    "Closes %@ • Due %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha em %1$@ • Vence em %2$@"
+          }
+        }
+      }
+    },
     "Closing Day: %lld" : {
       "localizations" : {
         "pt-BR" : {
@@ -1342,12 +1561,12 @@
         }
       }
     },
-    "Credit Limit (R$)" : {
+    "Credit Limit" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limite de Crédito (R$)"
+            "state" : "machine_translated",
+            "value" : "Limite de Crédito"
           }
         }
       }
@@ -1438,6 +1657,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Atual: %@"
+          }
+        }
+      }
+    },
+    "Cycle" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ciclo"
+          }
+        }
+      }
+    },
+    "Cycle Details" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detalhes do Ciclo"
           }
         }
       }
@@ -1638,6 +1877,16 @@
         }
       }
     },
+    "Each occurrence is charged once to this card's invoice. Changes apply to future occurrences only." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada ocorrência é cobrada uma vez na fatura deste cartão. Alterações valem só para as próximas ocorrências."
+          }
+        }
+      }
+    },
     "Edit" : {
       "localizations" : {
         "pt-BR" : {
@@ -1834,6 +2083,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Despesas"
+          }
+        }
+      }
+    },
+    "Expenses and investments by financial cycle" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Despesas e investimentos por ciclo financeiro"
           }
         }
       }
@@ -2058,6 +2317,16 @@
         }
       }
     },
+    "Flow" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Fluxo"
+          }
+        }
+      }
+    },
     "Food" : {
       "localizations" : {
         "pt-BR" : {
@@ -2258,6 +2527,46 @@
         }
       }
     },
+    "Invested" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Investido"
+          }
+        }
+      }
+    },
+    "Investment" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Investimento"
+          }
+        }
+      }
+    },
+    "Investment Income" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rendimentos"
+          }
+        }
+      }
+    },
+    "Investment Percentage of Income" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Percentual da Receita Investido"
+          }
+        }
+      }
+    },
     "Investments" : {
       "localizations" : {
         "pt-BR" : {
@@ -2284,6 +2593,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vencimento da Fatura"
+          }
+        }
+      }
+    },
+    "Invoice Preview" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prévia da fatura"
           }
         }
       }
@@ -2535,6 +2854,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Próximo Ciclo"
+          }
+        }
+      }
+    },
+    "Next invoice: %@ • %@ • closes %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próxima fatura: %1$@ • %2$@ • fecha em %3$@"
           }
         }
       }
@@ -2810,6 +3139,16 @@
         }
       }
     },
+    "Nothing left to pay" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nada a pagar"
+          }
+        }
+      }
+    },
     "OK" : {
       "localizations" : {
         "pt-BR" : {
@@ -3060,6 +3399,16 @@
         }
       }
     },
+    "Planning estimate for this financial cycle, not your bank balance or card limit." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estimativa de planejamento para este ciclo financeiro. Não é o saldo da conta nem o limite do cartão."
+          }
+        }
+      }
+    },
     "Português (Brasil)" : {
       "localizations" : {
         "pt-BR" : {
@@ -3120,6 +3469,16 @@
         }
       }
     },
+    "Projected Available After Investments" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disponível projetado após investimentos"
+          }
+        }
+      }
+    },
     "Projected Balance" : {
       "localizations" : {
         "pt-BR" : {
@@ -3130,32 +3489,12 @@
         }
       }
     },
-    "Projected Budget Remaining" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Saldo Projetado do Orçamento"
-          }
-        }
-      }
-    },
     "Projected Expenses" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Despesas Projetadas"
-          }
-        }
-      }
-    },
-    "Projected Over Budget" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Projeção Acima do Orçamento"
           }
         }
       }
@@ -3180,12 +3519,12 @@
         }
       }
     },
-    "Projected balance" : {
+    "Projected balance before investments" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saldo projetado"
+            "value" : "Saldo projetado antes dos investimentos"
           }
         }
       }
@@ -3196,6 +3535,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Saldo projetado do orçamento"
+          }
+        }
+      }
+    },
+    "Projected income" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Receita projetada"
           }
         }
       }
@@ -3256,16 +3605,6 @@
         }
       }
     },
-    "Projection" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Projeção"
-          }
-        }
-      }
-    },
     "Purchase" : {
       "localizations" : {
         "pt-BR" : {
@@ -3302,12 +3641,12 @@
         }
       }
     },
-    "R$" : {
+    "R$ 0,00" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "R$"
+            "state" : "machine_translated",
+            "value" : "R$ 0,00"
           }
         }
       }
@@ -3462,6 +3801,16 @@
         }
       }
     },
+    "Safe to Spend" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Livre para gastar"
+          }
+        }
+      }
+    },
     "Salary" : {
       "localizations" : {
         "pt-BR" : {
@@ -3528,6 +3877,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Toque em uma barra para ver os gastos do dia."
+          }
+        }
+      }
+    },
+    "Selected Cycle" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ciclo Selecionado"
           }
         }
       }
@@ -3768,6 +4127,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "A conta fica no ciclo financeiro do vencimento. O gasto entra no ciclo da data em que o pagamento foi feito."
+          }
+        }
+      }
+    },
+    "This Cycle" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este Ciclo"
           }
         }
       }
@@ -4198,6 +4567,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dentro do Orçamento"
+          }
+        }
+      }
+    },
+    "Yesterday" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ontem"
           }
         }
       }
