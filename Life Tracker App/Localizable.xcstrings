@@ -11,6 +11,16 @@
         }
       }
     },
+    "% of expenses" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "% das despesas"
+          }
+        }
+      }
+    },
     "%@" : {
       "localizations" : {
         "pt-BR" : {
@@ -33,6 +43,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ (%2$lld)"
+          }
+        }
+      }
+    },
+    "%@ + %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ + %2$@"
+          }
+        }
+      }
+    },
+    "%@ / cycle" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ / ciclo"
           }
         }
       }
@@ -161,36 +191,6 @@
         }
       }
     },
-    "%@ over the projected budget" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ acima do orçamento projetado"
-          }
-        }
-      }
-    },
-    "%@ over what's projected to be available" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ acima do disponível projetado"
-          }
-        }
-      }
-    },
-    "%@ per day • %@" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ por dia • %2$@"
-          }
-        }
-      }
-    },
     "%@ projected over budget" : {
       "localizations" : {
         "pt-BR" : {
@@ -273,6 +273,16 @@
         }
       }
     },
+    "%@ vs previous cycle" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ vs. ciclo anterior"
+          }
+        }
+      }
+    },
     "%@ • %@" : {
       "localizations" : {
         "pt-BR" : {
@@ -295,6 +305,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ •••• %2$@"
+          }
+        }
+      }
+    },
+    "%lld active recurring expenses" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld active recurring expense"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld active recurring expenses"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld despesa recorrente ativa"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld despesas recorrentes ativas"
+                }
+              }
+            }
           }
         }
       }
@@ -339,6 +389,46 @@
         }
       }
     },
+    "%lld charged to credit cards" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld charged to a credit card"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld charged to credit cards"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld no cartão de crédito"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld no cartão de crédito"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld days remaining" : {
       "localizations" : {
         "en" : {
@@ -372,6 +462,86 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "%lld dias restantes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld estimates" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld estimate"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld estimates"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld estimativa"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld estimativas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld fixed amounts" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld fixed amount"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld fixed amounts"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld valor fixo"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld valores fixos"
                 }
               }
             }
@@ -703,6 +873,58 @@
         }
       }
     },
+    "%lld transactions" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld transaction"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld transactions"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld transactions"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld transação"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld transações"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld transações"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld." : {
       "localizations" : {
         "pt-BR" : {
@@ -815,6 +1037,16 @@
         }
       }
     },
+    "A. Recorded fixed / recurring spending" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A. Gastos fixos / recorrentes registrados"
+          }
+        }
+      }
+    },
     "Accounted" : {
       "localizations" : {
         "pt-BR" : {
@@ -831,6 +1063,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ativo"
+          }
+        }
+      }
+    },
+    "Active recurring expenses for one financial cycle. Recurring income is not included." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Despesas recorrentes ativas em um ciclo financeiro. Receitas recorrentes não entram."
           }
         }
       }
@@ -881,12 +1123,12 @@
         }
       }
     },
-    "Actual Spent" : {
+    "Actual spending" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gasto Real"
+            "value" : "Gasto real"
           }
         }
       }
@@ -1201,6 +1443,16 @@
         }
       }
     },
+    "Automatic recurring expenses" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Despesas recorrentes automáticas"
+          }
+        }
+      }
+    },
     "Available After Investments" : {
       "localizations" : {
         "pt-BR" : {
@@ -1227,6 +1479,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Saldo"
+          }
+        }
+      }
+    },
+    "Balance (Income − Expenses)" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saldo (Receitas − Despesas)"
+          }
+        }
+      }
+    },
+    "Biggest decrease: %@ (%@)" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maior queda: %1$@ (%2$@)"
+          }
+        }
+      }
+    },
+    "Biggest increase: %@ (%@)" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maior alta: %1$@ (%2$@)"
           }
         }
       }
@@ -1301,6 +1583,16 @@
         }
       }
     },
+    "Budget history is not stored: budget figures use the budgets configured today." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O histórico de orçamentos não é guardado: os valores de orçamento usam os orçamentos configurados hoje."
+          }
+        }
+      }
+    },
     "Budget used" : {
       "localizations" : {
         "pt-BR" : {
@@ -1341,6 +1633,16 @@
         }
       }
     },
+    "C. Estimated amounts still due (not recorded)" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "C. Valores estimados ainda a vencer (não registrados)"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "localizations" : {
         "pt-BR" : {
@@ -1357,6 +1659,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cartão"
+          }
+        }
+      }
+    },
+    "Card purchases count as spending in the cycle they are attributed to. Invoice totals settle those same purchases and may include other cycles, so they are never added to spending." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compras no cartão contam como gasto no ciclo ao qual pertencem. O total da fatura quita essas mesmas compras e pode incluir outros ciclos, por isso nunca é somado aos gastos."
           }
         }
       }
@@ -1511,6 +1823,26 @@
         }
       }
     },
+    "Configured" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configurado"
+          }
+        }
+      }
+    },
+    "Configured amounts of active fixed expenses for one financial cycle. Payments already made are not included." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valores configurados dos gastos fixos ativos em um ciclo financeiro. Pagamentos já feitos não entram."
+          }
+        }
+      }
+    },
     "Confirm Payment" : {
       "localizations" : {
         "pt-BR" : {
@@ -1561,6 +1893,16 @@
         }
       }
     },
+    "Credit Cards and Installments" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cartões de Crédito e Parcelas"
+          }
+        }
+      }
+    },
     "Credit Limit" : {
       "localizations" : {
         "pt-BR" : {
@@ -1597,6 +1939,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ainda não é possível pagar gastos fixos com cartão de crédito."
+          }
+        }
+      }
+    },
+    "Credit-card spending in this cycle" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gastos no cartão neste ciclo"
           }
         }
       }
@@ -1711,6 +2063,16 @@
         }
       }
     },
+    "Dates are the financial date that places each entry in this cycle. Card entries also show the purchase date and invoice due date; each installment is listed with its own amount." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As datas são a data financeira que coloca cada lançamento neste ciclo. Lançamentos no cartão mostram também a data da compra e o vencimento da fatura; cada parcela aparece com o próprio valor."
+          }
+        }
+      }
+    },
     "Day" : {
       "localizations" : {
         "pt-BR" : {
@@ -1801,12 +2163,32 @@
         }
       }
     },
+    "Description" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descrição"
+          }
+        }
+      }
+    },
     "Details" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Detalhes"
+          }
+        }
+      }
+    },
+    "Difference" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diferença"
           }
         }
       }
@@ -2027,6 +2409,16 @@
         }
       }
     },
+    "Estimated total" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total estimado"
+          }
+        }
+      }
+    },
     "Exceeded by" : {
       "localizations" : {
         "pt-BR" : {
@@ -2097,12 +2489,32 @@
         }
       }
     },
+    "Expenses by Category" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Despesas por Categoria"
+          }
+        }
+      }
+    },
     "Expenses compared with previous cycle" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Despesas comparadas ao ciclo anterior"
+          }
+        }
+      }
+    },
+    "Export PDF" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportar PDF"
           }
         }
       }
@@ -2193,6 +2605,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Orçamento de Gastos do Ciclo"
+          }
+        }
+      }
+    },
+    "Financial Cycle Summary" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resumo do Ciclo Financeiro"
           }
         }
       }
@@ -2297,12 +2719,52 @@
         }
       }
     },
+    "Fixed and Recurring Expenses" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gastos Fixos e Recorrentes"
+          }
+        }
+      }
+    },
     "Fixed and recurring expenses represented %@ of spending." : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gastos fixos e recorrentes representaram %@ do total."
+          }
+        }
+      }
+    },
+    "Fixed bill" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gasto fixo"
+          }
+        }
+      }
+    },
+    "Fixed bill payments" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagamentos de gastos fixos"
+          }
+        }
+      }
+    },
+    "Fixed bills due in this cycle" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gastos fixos com vencimento neste ciclo"
           }
         }
       }
@@ -2353,6 +2815,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Frequência"
+          }
+        }
+      }
+    },
+    "Generated on %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerado em %@"
+          }
+        }
+      }
+    },
+    "Generating PDF" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerando PDF"
           }
         }
       }
@@ -2447,6 +2929,16 @@
         }
       }
     },
+    "Installment %lld of %lld" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parcela %1$lld de %2$lld"
+          }
+        }
+      }
+    },
     "Installment Plan" : {
       "localizations" : {
         "pt-BR" : {
@@ -2503,6 +2995,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Parcelas"
+          }
+        }
+      }
+    },
+    "Installments committed to future cycles" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parcelas comprometidas em ciclos futuros"
+          }
+        }
+      }
+    },
+    "Installments in this cycle" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parcelas neste ciclo"
           }
         }
       }
@@ -2607,12 +3119,32 @@
         }
       }
     },
+    "Invoice Preview (open, not payable yet)" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prévia da fatura (aberta, ainda não pagável)"
+          }
+        }
+      }
+    },
     "Invoice due %@" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fatura vence em %@"
+          }
+        }
+      }
+    },
+    "Invoice total" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total da fatura"
           }
         }
       }
@@ -2637,12 +3169,32 @@
         }
       }
     },
+    "Known projected spending" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gasto projetado conhecido"
+          }
+        }
+      }
+    },
     "Language" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Idioma"
+          }
+        }
+      }
+    },
+    "Largest spending categories: %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categorias com mais gastos: %@"
           }
         }
       }
@@ -2663,6 +3215,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Assistente LifeTracker"
+          }
+        }
+      }
+    },
+    "LifeTracker Financial Report" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relatório Financeiro LifeTracker"
+          }
+        }
+      }
+    },
+    "LifeTracker_Report" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LifeTracker_Relatorio"
           }
         }
       }
@@ -3109,6 +3681,16 @@
         }
       }
     },
+    "No transactions in this cycle." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhuma transação neste ciclo."
+          }
+        }
+      }
+    },
     "No transactions yet" : {
       "localizations" : {
         "pt-BR" : {
@@ -3279,12 +3861,42 @@
         }
       }
     },
+    "Overdue" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atrasada"
+          }
+        }
+      }
+    },
     "Overdue • Due %@" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Atrasada • Venceu em %@"
+          }
+        }
+      }
+    },
+    "Page %lld" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Página %lld"
+          }
+        }
+      }
+    },
+    "Page %lld of %lld" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Página %1$lld de %2$lld"
           }
         }
       }
@@ -3379,6 +3991,16 @@
         }
       }
     },
+    "Payment obligations as of %@. They are not spending: paying a card invoice does not create another expense." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obrigações de pagamento em %@. Não são gastos: pagar a fatura do cartão não cria outra despesa."
+          }
+        }
+      }
+    },
     "Pending" : {
       "localizations" : {
         "pt-BR" : {
@@ -3389,22 +4011,22 @@
         }
       }
     },
+    "Period" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Período"
+          }
+        }
+      }
+    },
     "Pix" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pix"
-          }
-        }
-      }
-    },
-    "Planning estimate for this financial cycle, not your bank balance or card limit." : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Estimativa de planejamento para este ciclo financeiro. Não é o saldo da conta nem o limite do cartão."
           }
         }
       }
@@ -3569,6 +4191,16 @@
         }
       }
     },
+    "Projected spending adds recurring expenses and fixed-bill estimates still due in this cycle. It is not recorded spending." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O gasto projetado soma despesas recorrentes e estimativas de gastos fixos que ainda vencem neste ciclo. Não é gasto registrado."
+          }
+        }
+      }
+    },
     "Projected spending exceeds the financial cycle budget." : {
       "localizations" : {
         "pt-BR" : {
@@ -3625,6 +4257,16 @@
         }
       }
     },
+    "Purchased %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comprado em %@"
+          }
+        }
+      }
+    },
     "Purchased %@ • Invoice due %@" : {
       "localizations" : {
         "en" : {
@@ -3661,6 +4303,36 @@
         }
       }
     },
+    "Reconciled: statement and category totals match the cycle summary." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conferido: os totais do extrato e das categorias batem com o resumo do ciclo."
+          }
+        }
+      }
+    },
+    "Recorded spending, unpaid obligations and estimates are listed separately and are never added together. Unpaid obligations are in Bills to Pay." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gastos registrados, obrigações em aberto e estimativas aparecem separados e nunca são somados. As obrigações em aberto estão em Contas a Pagar."
+          }
+        }
+      }
+    },
+    "Recurring" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recorrente"
+          }
+        }
+      }
+    },
     "Recurring Expense" : {
       "localizations" : {
         "pt-BR" : {
@@ -3687,6 +4359,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Transações Recorrentes"
+          }
+        }
+      }
+    },
+    "Recurring credit-card charges" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cobranças recorrentes no cartão"
+          }
+        }
+      }
+    },
+    "Recurring total" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total recorrente"
           }
         }
       }
@@ -3801,16 +4493,6 @@
         }
       }
     },
-    "Safe to Spend" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Livre para gastar"
-          }
-        }
-      }
-    },
     "Salary" : {
       "localizations" : {
         "pt-BR" : {
@@ -3877,16 +4559,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Toque em uma barra para ver os gastos do dia."
-          }
-        }
-      }
-    },
-    "Selected Cycle" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Ciclo Selecionado"
           }
         }
       }
@@ -3967,6 +4639,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tipo de Gasto"
+          }
+        }
+      }
+    },
+    "Spending attributed to this cycle" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gastos atribuídos a este ciclo"
           }
         }
       }
@@ -4201,6 +4883,16 @@
         }
       }
     },
+    "This cycle has ended, so projected spending equals recorded spending." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este ciclo já terminou, então o gasto projetado é igual ao gasto registrado."
+          }
+        }
+      }
+    },
     "This invoice is still open. It can be marked as paid after it closes." : {
       "localizations" : {
         "pt-BR" : {
@@ -4361,6 +5053,26 @@
         }
       }
     },
+    "Total invested" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total investido"
+          }
+        }
+      }
+    },
+    "Total known unpaid obligations" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total conhecido em aberto"
+          }
+        }
+      }
+    },
     "Transaction" : {
       "localizations" : {
         "pt-BR" : {
@@ -4397,6 +5109,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Data: mais antigas"
+          }
+        }
+      }
+    },
+    "Transaction Statement" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extrato de Transações"
           }
         }
       }
@@ -4447,6 +5169,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Não Foi Possível Excluir"
+          }
+        }
+      }
+    },
+    "Unable to Export PDF" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não Foi Possível Exportar o PDF"
           }
         }
       }
@@ -4511,6 +5243,16 @@
         }
       }
     },
+    "Unknown amount" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valor desconhecido"
+          }
+        }
+      }
+    },
     "Upcoming" : {
       "localizations" : {
         "pt-BR" : {
@@ -4551,12 +5293,32 @@
         }
       }
     },
+    "Variable spending" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gastos variáveis"
+          }
+        }
+      }
+    },
     "View All Transactions" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ver Todas as Transações"
+          }
+        }
+      }
+    },
+    "Warning: statement totals do not match the cycle summary." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atenção: os totais do extrato não batem com o resumo do ciclo."
           }
         }
       }
@@ -4617,6 +5379,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "usado"
+          }
+        }
+      }
+    },
+    "vs previous" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vs. anterior"
           }
         }
       }

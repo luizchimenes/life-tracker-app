@@ -10,6 +10,7 @@ struct FinanceView: View {
     @Query private var recurringTransactions: [RecurringTransaction]
     @Query private var fixedBillOccurrences: [FixedBillOccurrence]
     @Query private var creditCardInvoices: [CreditCardInvoice]
+    @Query private var fixedBills: [FixedBill]
 
     @State private var showsAddTransaction = false
     @State private var showsManageBudgets = false
@@ -35,8 +36,7 @@ struct FinanceView: View {
             transactions: transactions,
             recurringTransactions: recurringTransactions,
             fixedBillOccurrences: fixedBillOccurrences,
-            creditCardInvoices: creditCardInvoices,
-            monthlyBudget: monthlyBudget
+            creditCardInvoices: creditCardInvoices
         )
     }
 
@@ -73,8 +73,13 @@ struct FinanceView: View {
         NavigationStack {
             List {
                 Section {
-                    SafeToSpendView(safeToSpend: overview.safeToSpend)
-                        .padding(.vertical, 4)
+                    CycleActivitySummaryView(
+                        projection: projection,
+                        commitments: FixedCommitmentSummary(
+                            bills: fixedBills,
+                            rules: recurringTransactions
+                        )
+                    )
 
                     DisclosureGroup("Cycle Details", isExpanded: $showsCycleDetails) {
                         FinanceSummaryView(
@@ -91,17 +96,13 @@ struct FinanceView: View {
                     }
                 } header: {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Financial Cycle")
+                        Text("This Cycle")
                         if let cycleDescription = cycleDescription(snapshot) {
-                            Text("\(cycleDescription) • \(Text("\(overview.safeToSpend.daysRemaining) days remaining"))")
+                            Text("\(cycleDescription) • \(Text("\(overview.daysRemaining) days remaining"))")
                                 .font(.caption)
                                 .textCase(nil)
                         }
                     }
-                }
-
-                Section("This Cycle") {
-                    CycleActivitySummaryView(projection: projection)
                 }
 
                 if !fixedBillSnapshot.occurrences.isEmpty

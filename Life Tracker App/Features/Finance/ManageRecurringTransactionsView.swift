@@ -42,6 +42,15 @@ struct ManageRecurringTransactionsView: View {
                             transactions: inactiveTransactions
                         )
                     }
+
+                    let commitment = RecurringExpenseCommitment(rules: recurringTransactions)
+                    if commitment.activeCount > 0 {
+                        Section {
+                            RecurringExpenseTotalView(commitment: commitment)
+                        } footer: {
+                            Text("Active recurring expenses for one financial cycle. Recurring income is not included.")
+                        }
+                    }
                 }
             }
             .navigationTitle("Recurring Transactions")

@@ -4,8 +4,8 @@ import Foundation
 /// screens always present the same numbers.
 struct FinanceOverview {
     let projection: MonthlyFinanceProjection
-    let safeToSpend: SafeToSpend
     let bills: BillsToPaySummary
+    let daysRemaining: Int
 
     var actual: MonthlyFinanceSnapshot {
         projection.actual
@@ -16,7 +16,6 @@ struct FinanceOverview {
         recurringTransactions: [RecurringTransaction],
         fixedBillOccurrences: [FixedBillOccurrence],
         creditCardInvoices: [CreditCardInvoice],
-        monthlyBudget: Decimal?,
         date: Date = .now,
         calendar: Calendar = .current
     ) {
@@ -27,12 +26,6 @@ struct FinanceOverview {
             date: date,
             calendar: calendar
         )
-        safeToSpend = SafeToSpend(
-            projection: projection,
-            monthlyBudget: monthlyBudget,
-            date: date,
-            calendar: calendar
-        )
         bills = BillsToPaySummary(
             fixedBillOccurrences: fixedBillOccurrences,
             creditCardInvoices: creditCardInvoices,
@@ -40,81 +33,7 @@ struct FinanceOverview {
             date: date,
             calendar: calendar
         )
-    }
-}
-
-/// How much can still be spent in the current financial cycle.
-///
-/// A planning figure, not a bank balance or card limit: projected income minus
-/// actual and scheduled expenses minus investments, capped by the remaining
-/// cycle budget when one is set. It can be negative; screens show the
-/// shortfall instead of a negative allowance.
-struct SafeToSpend {
-    nonisolated enum Constraint {
-        case cash
-        case budget
-    }
-
-    /// Projected income − projected expenses − projected investments.
-    let cashAvailable: Decimal
-    /// Cycle budget − projected expenses, when a budget exists.
-    let budgetRemaining: Decimal?
-    let amount: Decimal
-    let constraint: Constraint
-    /// Calendar days from today through the cycle's last day, inclusive.
-    let daysRemaining: Int
-
-    var isShortfall: Bool {
-        amount < 0
-    }
-
-    var displayAmount: Decimal {
-        max(amount, 0)
-    }
-
-    var shortfall: Decimal {
-        max(-amount, 0)
-    }
-
-    var perDay: Decimal {
-        guard amount > 0, daysRemaining > 0 else {
-            return 0
-        }
-        return amount / Decimal(daysRemaining)
-    }
-
-    init(
-        projection: MonthlyFinanceProjection,
-        monthlyBudget: Decimal?,
-        date: Date = .now,
-        calendar: Calendar = .current
-    ) {
-        cashAvailable = projection.projectedAvailableAfterInvestments
-        budgetRemaining = monthlyBudget.map {
-            projection.projectedBudgetRemaining(monthlyBudget: $0)
-        }
-
-        if let budgetRemaining, budgetRemaining < cashAvailable {
-            amount = budgetRemaining
-            constraint = .budget
-        } else {
-            amount = cashAvailable
-            constraint = .cash
-        }
-
-        daysRemaining = projection.actual.cycle.map {
-            Self.daysRemaining(in: $0, from: date, calendar: calendar)
-        } ?? 0
-    }
-
-    static func daysRemaining(
-        in cycle: FinancialCycle,
-        from date: Date,
-        calendar: Calendar = .current
-    ) -> Int {
-        let today = calendar.startOfDay(for: date)
-        let days = calendar.dateComponents([.day], from: today, to: cycle.end).day ?? 0
-        return max(days, 0)
+        daysRemaining = projection.actual.cycle?.daysRemaining(from: date, calendar: calendar) ?? 0
     }
 }
 

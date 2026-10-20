@@ -83,12 +83,15 @@ struct AvailableMoneyTests {
     /// with the standalone calculations they wrap.
     @Test func overviewIsTheSingleSourceForHomeAndFinance() {
         let data = fixture()
-        let overview = FinanceOverview(transactions: data.transactions, recurringTransactions: data.rules, fixedBillOccurrences: [], creditCardInvoices: [], monthlyBudget: nil, date: day(2026, 10, 20), calendar: utc)
+        let overview = FinanceOverview(transactions: data.transactions, recurringTransactions: data.rules, fixedBillOccurrences: [], creditCardInvoices: [], date: day(2026, 10, 20), calendar: utc)
         let projection = MonthlyFinanceProjection(transactions: data.transactions, recurringTransactions: data.rules, date: day(2026, 10, 20), calendar: utc)
+        #expect(overview.actual.expenses == 1_000)
         #expect(overview.actual.availableAfterInvestments == projection.actual.availableAfterInvestments)
-        #expect(overview.projection.projectedExpenses == projection.projectedExpenses)
-        #expect(overview.safeToSpend.cashAvailable == projection.projectedAvailableAfterInvestments)
-        #expect(overview.safeToSpend.amount == 1_700)
+        #expect(overview.projection.projectedExpenses == 1_300)
+        #expect(overview.projection.projectedInvestments == 2_000)
+        #expect(overview.projection.projectedAvailableAfterInvestments == projection.projectedAvailableAfterInvestments)
+        // Oct 20 through Nov 8.
+        #expect(overview.daysRemaining == 20)
     }
 }
 
@@ -206,61 +209,17 @@ struct RecurringCreditCardTests {
     }
 }
 
-@Suite("Safe to Spend")
-struct SafeToSpendTests {
-    private func projection(income: Decimal, expenses: Decimal, investments: Decimal = 0, on date: Date) -> MonthlyFinanceProjection {
-        let food = expenseCategory()
-        var transactions = [
-            Transaction(title: "Salary", amount: income, date: day(2026, 10, 9), type: .income, category: incomeCategory()),
-            Transaction(title: "Spend", amount: expenses, date: day(2026, 10, 10), type: .expense, category: food, paymentMethod: .pix)
-        ]
-        if investments > 0 {
-            transactions.append(Transaction(title: "Fund", amount: investments, date: day(2026, 10, 10), type: .investment, category: food))
-        }
-        return MonthlyFinanceProjection(transactions: transactions, recurringTransactions: [], date: date, calendar: utc)
-    }
-
-    @Test func withoutBudgetUsesProjectedAvailableCash() {
-        let p = projection(income: 5_000, expenses: 1_000, investments: 2_000, on: day(2026, 10, 20))
-        let safe = SafeToSpend(projection: p, monthlyBudget: nil, date: day(2026, 10, 20), calendar: utc)
-        #expect(safe.amount == 2_000)
-        #expect(safe.constraint == .cash)
-        #expect(safe.budgetRemaining == nil)
-    }
-
-    @Test func withBudgetUsesTheSmallerConstraint() {
-        let p = projection(income: 5_000, expenses: 1_000, investments: 2_000, on: day(2026, 10, 20))
-        let tight = SafeToSpend(projection: p, monthlyBudget: 1_500, date: day(2026, 10, 20), calendar: utc)
-        #expect(tight.amount == 500)
-        #expect(tight.constraint == .budget)
-
-        let loose = SafeToSpend(projection: p, monthlyBudget: 10_000, date: day(2026, 10, 20), calendar: utc)
-        #expect(loose.amount == 2_000)
-        #expect(loose.constraint == .cash)
-    }
-
-    @Test func negativeValueBecomesAShortfall() {
-        let p = projection(income: 1_000, expenses: 1_420, on: day(2026, 10, 20))
-        let safe = SafeToSpend(projection: p, monthlyBudget: nil, date: day(2026, 10, 20), calendar: utc)
-        #expect(safe.amount == -420)
-        #expect(safe.isShortfall)
-        #expect(safe.displayAmount == 0)
-        #expect(safe.shortfall == 420)
-        #expect(safe.perDay == 0)
-    }
-
-    @Test func perDayUsesDaysRemainingIncludingToday() {
-        let p = projection(income: 2_850, expenses: 1_000, on: day(2026, 10, 20))
-        let safe = SafeToSpend(projection: p, monthlyBudget: nil, date: day(2026, 10, 20), calendar: utc)
-        // Oct 20 through Nov 8.
-        #expect(safe.daysRemaining == 20)
-        #expect(safe.perDay == Decimal(string: "92.5")!)
+@Suite("Cycle days remaining")
+struct CycleDaysRemainingTests {
+    @Test func countsTodayThroughTheLastCycleDay() throws {
+        let cycle = try #require(FinancialCycle(containing: day(2026, 10, 20), calendar: utc))
+        #expect(cycle.daysRemaining(from: day(2026, 10, 20), calendar: utc) == 20)
+        #expect(cycle.daysRemaining(from: day(2026, 10, 9), calendar: utc) == 31)
     }
 
     @Test func finalCycleDayCountsAsOneDay() throws {
         let cycle = try #require(FinancialCycle(containing: day(2026, 11, 8), calendar: utc))
-        #expect(SafeToSpend.daysRemaining(in: cycle, from: day(2026, 11, 8), calendar: utc) == 1)
-        #expect(SafeToSpend.daysRemaining(in: cycle, from: day(2026, 10, 9), calendar: utc) == 31)
+        #expect(cycle.daysRemaining(from: day(2026, 11, 8), calendar: utc) == 1)
     }
 }
 
@@ -326,20 +285,146 @@ struct BillsToPayTests {
         let transactions = try context.fetch(FetchDescriptor<Transaction>())
         let date = day(2026, 11, 10)
 
-        let withInvoices = FinanceOverview(transactions: transactions, recurringTransactions: [], fixedBillOccurrences: [], creditCardInvoices: invoices, monthlyBudget: nil, date: date, calendar: utc)
-        let withoutInvoices = FinanceOverview(transactions: transactions, recurringTransactions: [], fixedBillOccurrences: [], creditCardInvoices: [], monthlyBudget: nil, date: date, calendar: utc)
+        let withInvoices = FinanceOverview(transactions: transactions, recurringTransactions: [], fixedBillOccurrences: [], creditCardInvoices: invoices, date: date, calendar: utc)
+        let withoutInvoices = FinanceOverview(transactions: transactions, recurringTransactions: [], fixedBillOccurrences: [], creditCardInvoices: [], date: date, calendar: utc)
         #expect(withInvoices.actual.expenses == 40)
         #expect(withInvoices.projection.projectedExpenses == withoutInvoices.projection.projectedExpenses)
-        #expect(withInvoices.safeToSpend.amount == withoutInvoices.safeToSpend.amount)
+        #expect(withInvoices.projection.projectedAvailableAfterInvestments == withoutInvoices.projection.projectedAvailableAfterInvestments)
 
         let closed = try #require(withInvoices.bills.payableInvoices.first?.invoice)
         try CreditCardInvoicePaymentService.markPaid(closed, paidDate: date, in: context, calendar: utc)
-        let after = FinanceOverview(transactions: try context.fetch(FetchDescriptor<Transaction>()), recurringTransactions: [], fixedBillOccurrences: [], creditCardInvoices: invoices, monthlyBudget: nil, date: date, calendar: utc)
+        let after = FinanceOverview(transactions: try context.fetch(FetchDescriptor<Transaction>()), recurringTransactions: [], fixedBillOccurrences: [], creditCardInvoices: invoices, date: date, calendar: utc)
         #expect(after.bills.pendingCount == 0)
         #expect(after.actual.expenses == withInvoices.actual.expenses)
         #expect(try context.fetchCount(FetchDescriptor<Transaction>()) == 2)
 
         let previousCycle = MonthlyFinanceSnapshot(transactions: try context.fetch(FetchDescriptor<Transaction>()), date: day(2026, 10, 20), calendar: utc)
         #expect(previousCycle.expenses == 300)
+    }
+}
+
+@Suite("Fixed commitments")
+@MainActor
+struct FixedCommitmentTests {
+    private let housing = expenseCategory("Housing")
+
+    private func bill(_ amount: Decimal?, _ mode: FixedBillAmountMode, active: Bool = true) -> FixedBill {
+        FixedBill(name: "Bill", category: housing, dueDay: 10, estimatedAmount: amount, amountMode: mode, startDate: day(2026, 1, 1), isActive: active)
+    }
+
+    private func rule(_ amount: Decimal, _ type: TransactionType = .expense, active: Bool = true, card: CreditCard? = nil) -> RecurringTransaction {
+        RecurringTransaction(title: "Rule", amount: amount, type: type, category: housing, startDate: day(2026, 1, 1), dayOfMonth: 15, isActive: active, paymentMethod: card == nil ? .pix : .creditCard, creditCard: card)
+    }
+
+    @Test func exactAmountsAddUpWithoutEstimateMarker() {
+        let commitment = FixedBillCommitment(bills: [bill(1_000, .fixed), bill(500, .fixed)])
+        #expect(commitment.total == 1_500)
+        #expect(commitment.exactCount == 2)
+        #expect(!commitment.includesEstimates)
+    }
+
+    @Test func estimatesAndUnknownAmountsAreReportedSeparately() {
+        let commitment = FixedBillCommitment(bills: [bill(1_000, .fixed), bill(200, .variable), bill(nil, .variable)])
+        #expect(commitment.total == 1_200)
+        #expect(commitment.exactCount == 1)
+        #expect(commitment.estimatedCount == 1)
+        #expect(commitment.unknownCount == 1)
+        #expect(commitment.activeCount == 3)
+        #expect(commitment.includesEstimates)
+    }
+
+    @Test func inactiveBillsAreExcluded() {
+        let commitment = FixedBillCommitment(bills: [bill(1_000, .fixed), bill(9_999, .fixed, active: false), bill(nil, .variable, active: false)])
+        #expect(commitment.total == 1_000)
+        #expect(commitment.activeCount == 1)
+        #expect(commitment.unknownCount == 0)
+    }
+
+    @Test func recurringTotalCountsActiveExpensesOnce() {
+        let card = CreditCard(name: "Card", lastFourDigits: "1234", closingDay: 9, dueDay: 15, creditLimit: 1_000)
+        let commitment = RecurringExpenseCommitment(rules: [
+            rule(100),
+            rule(Decimal(string: "59.90")!, card: card),
+            rule(5_000, .income),
+            rule(300, active: false)
+        ])
+        #expect(commitment.total == Decimal(string: "159.90")!)
+        #expect(commitment.activeCount == 2)
+        #expect(commitment.creditCardCount == 1)
+    }
+
+    @Test func generatedHistoryDoesNotChangeTheRecurringTotal() throws {
+        let context = try TestStore.context()
+        let netflix = rule(Decimal(string: "59.90")!)
+        context.insert(housing)
+        context.insert(netflix)
+        let before = RecurringExpenseCommitment(rules: [netflix]).total
+        try RecurringTransactionGenerator.generateDueTransactions(in: context, through: day(2026, 6, 20), calendar: utc)
+        #expect(try context.fetchCount(FetchDescriptor<Transaction>()) == 6)
+        #expect(RecurringExpenseCommitment(rules: try context.fetch(FetchDescriptor<RecurringTransaction>())).total == before)
+    }
+
+    @Test func combinedCommitmentReconciles() {
+        let summary = FixedCommitmentSummary(
+            bills: [bill(1_000, .fixed), bill(200, .variable), bill(nil, .variable)],
+            rules: [rule(100), rule(5_000, .income)]
+        )
+        #expect(summary.total == 1_300)
+        #expect(summary.total == summary.fixedBills.total + summary.recurring.total)
+        #expect(summary.includesEstimates)
+        #expect(summary.unknownCount == 1)
+        #expect(!summary.isEmpty)
+    }
+}
+
+@Suite("Chart tap resolution")
+struct ChartTapResolutionTests {
+    /// May through October 2026 cycles, seen on Oct 20.
+    private func periods(_ transactions: [Transaction] = []) -> [TransactionPeriodSummary] {
+        TransactionPeriodSummary.recentCycles(transactions: transactions, date: day(2026, 10, 20), calendar: utc)
+    }
+
+    @Test func tapAnywhereInAColumnSelectsThatCycle() {
+        let periods = periods()
+        #expect(periods.count == 6)
+        // The October bar spans Oct 1–31; Oct 28 is nearer Nov 9 than Oct 9
+        // but is still inside the October column.
+        #expect(TransactionPeriodSummary.period(atChartDate: day(2026, 10, 28), in: periods, calendar: utc)?.cycle.start == day(2026, 10, 9))
+        #expect(TransactionPeriodSummary.period(atChartDate: day(2026, 10, 3), in: periods, calendar: utc)?.cycle.start == day(2026, 10, 9))
+        #expect(TransactionPeriodSummary.period(atChartDate: day(2026, 5, 15), in: periods, calendar: utc)?.cycle.start == day(2026, 5, 9))
+    }
+
+    @Test func boundariesAndOutsideTapsAreDeterministic() {
+        let periods = periods()
+        let lastSecondOfSeptember = day(2026, 10, 1).addingTimeInterval(-1)
+        #expect(TransactionPeriodSummary.period(atChartDate: lastSecondOfSeptember, in: periods, calendar: utc)?.cycle.start == day(2026, 9, 9))
+        #expect(TransactionPeriodSummary.period(atChartDate: day(2026, 10, 1), in: periods, calendar: utc)?.cycle.start == day(2026, 10, 9))
+        #expect(TransactionPeriodSummary.period(atChartDate: day(2026, 11, 1), in: periods, calendar: utc) == nil)
+        #expect(TransactionPeriodSummary.period(atChartDate: day(2026, 4, 30), in: periods, calendar: utc) == nil)
+    }
+
+    @Test func aggregationValuesAreUnchanged() {
+        let food = expenseCategory()
+        let invest = TransactionCategory(name: "Investments", iconName: "chart.line.uptrend.xyaxis", colorName: "indigo", type: .investment)
+        let periods = periods([
+            Transaction(title: "Market", amount: 300, date: day(2026, 10, 12), type: .expense, category: food, paymentMethod: .pix),
+            Transaction(title: "Fund", amount: 1_000, date: day(2026, 10, 15), type: .investment, category: invest),
+            Transaction(title: "Before cycle", amount: 50, date: day(2026, 10, 8), type: .expense, category: food, paymentMethod: .pix)
+        ])
+        let october = TransactionPeriodSummary.period(atChartDate: day(2026, 10, 20), in: periods, calendar: utc)
+        let september = TransactionPeriodSummary.period(atChartDate: day(2026, 9, 20), in: periods, calendar: utc)
+        #expect(october?.expenses == 300)
+        #expect(october?.investments == 1_000)
+        #expect(september?.expenses == 50)
+    }
+
+    @Test func dailyChartTapSelectsThatDayOnly() {
+        let spending = [
+            DailySpendingData(date: day(2026, 10, 12), amount: 30),
+            DailySpendingData(date: day(2026, 10, 13), amount: 40)
+        ]
+        let noon = day(2026, 10, 13).addingTimeInterval(12 * 3600)
+        #expect(DailySpendingData.day(atChartDate: noon, in: spending, calendar: utc)?.amount == 40)
+        #expect(DailySpendingData.day(atChartDate: day(2026, 10, 14), in: spending, calendar: utc) == nil)
     }
 }

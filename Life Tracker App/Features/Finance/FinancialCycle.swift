@@ -48,6 +48,14 @@ struct FinancialCycle {
         date >= start && date < end
     }
 
+    /// Calendar days from `date` through the cycle's last day, inclusive:
+    /// the last day (day 8) counts as one.
+    func daysRemaining(from date: Date, calendar: Calendar = .current) -> Int {
+        let today = calendar.startOfDay(for: date)
+        let days = calendar.dateComponents([.day], from: today, to: end).day ?? 0
+        return max(days, 0)
+    }
+
     func identifier(calendar: Calendar = .current) -> String {
         let components = calendar.dateComponents([.year, .month], from: start)
         return "\(components.year ?? 0)-\(components.month ?? 0)-\(Self.startDay)"

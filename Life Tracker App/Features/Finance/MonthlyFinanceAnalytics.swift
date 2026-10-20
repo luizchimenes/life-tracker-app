@@ -28,6 +28,16 @@ struct DailySpendingData: Identifiable {
     let amount: Decimal
 
     var id: Date { date }
+
+    /// Bars are one calendar day wide, so a tapped chart date selects the bar
+    /// of that same day; days without a bar return nil.
+    static func day(
+        atChartDate date: Date,
+        in spending: [DailySpendingData],
+        calendar: Calendar = .current
+    ) -> DailySpendingData? {
+        spending.first { calendar.isDate($0.date, inSameDayAs: date) }
+    }
 }
 
 struct MonthlyFinanceAnalytics {

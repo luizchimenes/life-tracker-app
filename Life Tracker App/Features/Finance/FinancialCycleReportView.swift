@@ -8,8 +8,13 @@ struct FinancialCycleReportView: View {
     @Query private var categoryBudgets: [CategoryBudget]
     @Query private var settingsRecords: [FinanceSettings]
     @Query private var fixedBillOccurrences: [FixedBillOccurrence]
+    @Query private var creditCardInvoices: [CreditCardInvoice]
+    @Query private var recurringTransactions: [RecurringTransaction]
 
     @State private var cycleOffset = 0
+#if canImport(UIKit)
+    @State private var export = FinancialReportExportViewModel()
+#endif
 
     private let currencyFormat = Decimal.FormatStyle.Currency(code: "BRL")
         .locale(AppLocalization.selectedLocale)
@@ -69,12 +74,59 @@ struct FinancialCycleReportView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Done") { dismiss() }
                 }
+#if canImport(UIKit)
+                ToolbarItem(placement: .primaryAction) {
+                    if export.isExporting {
+                        ProgressView()
+                            .accessibilityLabel("Generating PDF")
+                    } else {
+                        Button("Export PDF", systemImage: "square.and.arrow.up") {
+                            exportSelectedCycle()
+                        }
+                        .disabled(selectedCycle == nil)
+                    }
+                }
+#endif
             }
+#if canImport(UIKit)
+            .sheet(item: $export.exportedFile, onDismiss: export.finishSharing) { file in
+                ShareSheet(url: file.url, onComplete: export.finishSharing)
+                    .ignoresSafeArea()
+            }
+            .alert(
+                "Unable to Export PDF",
+                isPresented: Binding(get: { export.errorMessage != nil }, set: { if !$0 { export.errorMessage = nil } })
+            ) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(export.errorMessage ?? "")
+            }
+#endif
         }
 #if os(macOS)
         .frame(minWidth: 760, minHeight: 760)
 #endif
     }
+
+#if canImport(UIKit)
+    /// Exports the cycle currently shown, including past cycles.
+    private func exportSelectedCycle() {
+        guard let cycle = selectedCycle else { return }
+        Task {
+            await export.export {
+                FinancialReportPDFContent.make(
+                    cycle: cycle,
+                    transactions: transactions,
+                    categoryBudgets: categoryBudgets,
+                    monthlyBudget: monthlyBudget,
+                    fixedBillOccurrences: fixedBillOccurrences,
+                    creditCardInvoices: creditCardInvoices,
+                    recurringTransactions: recurringTransactions
+                )
+            }
+        }
+    }
+#endif
 
     private func cycleNavigation(_ report: FinancialCycleReport) -> some View {
         HStack {

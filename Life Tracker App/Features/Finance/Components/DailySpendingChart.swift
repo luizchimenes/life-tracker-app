@@ -5,6 +5,8 @@ struct DailySpendingChart: View {
     let spending: [DailySpendingData]
 
     @State private var selectedDate: Date?
+    /// Raw x value written by a tap; resolved to a day and cleared at once.
+    @State private var tappedDate: Date?
 
     private let currencyFormat = Decimal.FormatStyle.Currency(code: "BRL")
         .locale(AppLocalization.selectedLocale)
@@ -36,7 +38,20 @@ struct DailySpendingChart: View {
                 )
             }
             .frame(height: 240)
-            .chartXSelection(value: $selectedDate)
+            // A single tap selects (or deselects) a day; the default selection
+            // gesture needs a press and hold.
+            .chartXSelection(value: $tappedDate)
+            .chartGesture { proxy in
+                SpatialTapGesture()
+                    .onEnded { proxy.selectXValue(at: $0.location.x) }
+            }
+            .onChange(of: tappedDate) {
+                guard let tappedDate else { return }
+                let day = DailySpendingData.day(atChartDate: tappedDate, in: spending)
+                selectedDate = day?.id == selectedSpending?.id ? nil : day?.date
+                self.tappedDate = nil
+            }
+            .sensoryFeedback(.selection, trigger: selectedDate)
             .chartXAxis {
                 AxisMarks(values: .stride(by: .day, count: 5)) {
                     AxisGridLine()

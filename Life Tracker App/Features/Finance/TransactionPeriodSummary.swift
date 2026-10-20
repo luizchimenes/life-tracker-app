@@ -27,6 +27,20 @@ struct TransactionPeriodSummary: Identifiable {
             .reduce(0) { $0 + $1.amount }
     }
 
+    /// Each bar spans the calendar month of its cycle start (`unit: .month`),
+    /// so a tapped chart date selects the cycle whose start shares its month.
+    /// The whole column is the hit target; dates outside every bar return nil.
+    static func period(
+        atChartDate date: Date,
+        in periods: [TransactionPeriodSummary],
+        calendar: Calendar = .current
+    ) -> TransactionPeriodSummary? {
+        let tapped = calendar.dateComponents([.year, .month], from: date)
+        return periods.first {
+            calendar.dateComponents([.year, .month], from: $0.cycle.start) == tapped
+        }
+    }
+
     static func recentCycles(
         transactions: [Transaction],
         count: Int = 6,

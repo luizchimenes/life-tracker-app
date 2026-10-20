@@ -34,6 +34,15 @@ struct ManageFixedBillsView: View {
                     if !inactiveBills.isEmpty {
                         billSection("Inactive", bills: inactiveBills)
                     }
+
+                    let commitment = FixedBillCommitment(bills: fixedBills)
+                    if commitment.activeCount > 0 {
+                        Section {
+                            FixedBillTotalView(commitment: commitment)
+                        } footer: {
+                            Text("Configured amounts of active fixed expenses for one financial cycle. Payments already made are not included.")
+                        }
+                    }
                 }
             }
             .navigationTitle("Fixed Expenses")

@@ -3,7 +3,6 @@ import SwiftUI
 
 struct HomeView: View {
     @Query(sort: \Transaction.date, order: .reverse) private var transactions: [Transaction]
-    @Query private var settingsRecords: [FinanceSettings]
     @Query private var recurringTransactions: [RecurringTransaction]
     @Query private var fixedBillOccurrences: [FixedBillOccurrence]
     @Query private var creditCardInvoices: [CreditCardInvoice]
@@ -15,22 +14,12 @@ struct HomeView: View {
             transactions: transactions,
             recurringTransactions: recurringTransactions,
             fixedBillOccurrences: fixedBillOccurrences,
-            creditCardInvoices: creditCardInvoices,
-            monthlyBudget: monthlyBudget
+            creditCardInvoices: creditCardInvoices
         )
     }
 
     private var recentTransactions: [Transaction] {
         TransactionActivity.recent(from: transactions, limit: 3)
-    }
-
-    private var monthlyBudget: Decimal? {
-        guard let budget = settingsRecords.first?.monthlySpendingBudget,
-              budget > 0 else {
-            return nil
-        }
-
-        return budget
     }
 
     init(onSeeFinance: @escaping () -> Void = {}) {
