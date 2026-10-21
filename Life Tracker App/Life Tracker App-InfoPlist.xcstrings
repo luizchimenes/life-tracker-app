@@ -10,6 +10,48 @@
             "state" : "new",
             "value" : "Life Tracker App"
           }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Life Tracker App"
+          }
+        }
+      }
+    },
+    "NSMicrophoneUsageDescription" : {
+      "comment" : "Privacy - Microphone Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "LifeTracker uses the microphone only while you add a transaction by voice. Audio is not stored."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O LifeTracker usa o microfone só enquanto você adiciona uma transação por voz. O áudio não é guardado."
+          }
+        }
+      }
+    },
+    "NSSpeechRecognitionUsageDescription" : {
+      "comment" : "Privacy - Speech Recognition Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "LifeTracker turns what you say into a transaction draft that you review before saving."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O LifeTracker transforma o que você fala em um rascunho de transação, que você revisa antes de salvar."
+          }
         }
       }
     }

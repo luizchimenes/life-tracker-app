@@ -13,6 +13,7 @@ struct FinanceView: View {
     @Query private var fixedBills: [FixedBill]
 
     @State private var showsAddTransaction = false
+    @State private var showsVoiceEntry = false
     @State private var showsManageBudgets = false
     @State private var showsManageCategories = false
     @State private var showsMonthlyBudget = false
@@ -234,11 +235,22 @@ struct FinanceView: View {
                         }
                     }
 
+#if os(iOS)
+                    Button("Add by Voice", systemImage: "mic") {
+                        showsVoiceEntry = true
+                    }
+#endif
+
                     Button("Add Transaction", systemImage: "plus") {
                         showsAddTransaction = true
                     }
                 }
             }
+#if os(iOS)
+            .sheet(isPresented: $showsVoiceEntry) {
+                VoiceTransactionView()
+            }
+#endif
             .sheet(isPresented: $showsAddTransaction) {
                 AddTransactionView()
             }

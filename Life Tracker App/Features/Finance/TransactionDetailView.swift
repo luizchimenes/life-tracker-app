@@ -11,6 +11,7 @@ struct TransactionDetailView: View {
     let transaction: Transaction
 
     @State private var showsEdit = false
+    @State private var showsChangeCycle = false
     @State private var showsDeleteConfirmation = false
     @State private var errorMessage: String?
 
@@ -41,15 +42,16 @@ struct TransactionDetailView: View {
                 LabeledContent(transaction.paymentMethod == .creditCard ? "Purchase Date" : "Transaction Date") {
                     Text(transaction.date, format: .dateTime.day().month().year())
                 }
-                if !Calendar.current.isDate(transaction.date, inSameDayAs: transaction.effectiveFinancialDate) {
-                    LabeledContent("Financial Date") {
+                if let cycle = transaction.effectiveFinancialCycle {
+                    LabeledContent("Financial Cycle") {
                         VStack(alignment: .trailing, spacing: 2) {
-                            Text(transaction.effectiveFinancialDate, format: .dateTime.day().month().year())
-                            Text("Installment counted in this financial cycle")
+                            Text(cycle.compactRangeText)
+                            Text(transaction.hasManualFinancialCycle ? "Manually Assigned" : "Automatic")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
                     }
+                    .accessibilityElement(children: .combine)
                 }
                 LabeledContent("Payment Method") { Text(transaction.paymentMethod.displayName) }
             }
@@ -135,6 +137,11 @@ struct TransactionDetailView: View {
                     Button("Edit Transaction", systemImage: "pencil") { showsEdit = true }
                 } else {
                     sourceEditingGuidance
+                    // Card purchases cannot be edited, but their cycle allocation
+                    // can change without touching invoices or installments.
+                    if canChangeCycle {
+                        Button("Change Financial Cycle", systemImage: "calendar.badge.clock") { showsChangeCycle = true }
+                    }
                 }
                 Button("Delete", systemImage: "trash", role: .destructive) {
                     showsDeleteConfirmation = true
@@ -143,6 +150,12 @@ struct TransactionDetailView: View {
         }
         .navigationTitle("Transaction")
         .sheet(isPresented: $showsEdit) { EditTransactionView(transaction: transaction) }
+        .sheet(isPresented: $showsChangeCycle) {
+            ChangeFinancialCycleView(
+                transaction: transaction,
+                currentSelection: FinancialCycleAllocationService.currentSelection(for: transaction, allTransactions: allTransactions)
+            )
+        }
         .confirmationDialog(
             deleteTitle,
             isPresented: $showsDeleteConfirmation,
@@ -156,6 +169,14 @@ struct TransactionDetailView: View {
         .alert("Unable to Delete", isPresented: Binding(get: { errorMessage != nil }, set: { if !$0 { errorMessage = nil } })) {
             Button("OK", role: .cancel) {}
         } message: { Text(errorMessage ?? "") }
+    }
+
+    /// Card purchases near the 9th, or with a manual choice to undo.
+    private var canChangeCycle: Bool {
+        transaction.sourceKind == .installment
+            && FinancialCycleAllocationService.canChangeAllocation(of: transaction)
+            && (!FinancialCycleAllocation.options(for: transaction.date).isEmpty
+                || FinancialCycleAllocationService.currentSelection(for: transaction, allTransactions: allTransactions) != nil)
     }
 
     @ViewBuilder

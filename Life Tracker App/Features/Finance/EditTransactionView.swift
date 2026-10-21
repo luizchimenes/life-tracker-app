@@ -14,6 +14,7 @@ struct EditTransactionView: View {
     @State private var notes: String
     @State private var paymentMethod: PaymentMethod
     @State private var errorMessage: String?
+    @State private var financialCycleOverrideStart: Date?
 
     init(transaction: Transaction) {
         self.transaction = transaction
@@ -23,6 +24,7 @@ struct EditTransactionView: View {
         _selectedCategoryID = State(initialValue: transaction.category?.id)
         _notes = State(initialValue: transaction.notes)
         _paymentMethod = State(initialValue: transaction.paymentMethod)
+        _financialCycleOverrideStart = State(initialValue: transaction.financialCycleOverrideStartDate)
     }
 
     private var compatibleCategories: [TransactionCategory] {
@@ -62,11 +64,15 @@ struct EditTransactionView: View {
                         }
                     }
                 }
+                FinancialCycleSelectionSection(date: date, overrideStart: $financialCycleOverrideStart)
                 Section("Notes") {
                     TextEditor(text: $notes).frame(minHeight: 100)
                 }
             }
             .navigationTitle("Edit Transaction")
+            .onChange(of: date) {
+                financialCycleOverrideStart = FinancialCycleAllocation.revalidated(financialCycleOverrideStart, for: date)
+            }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
@@ -87,6 +93,7 @@ struct EditTransactionView: View {
         transaction.category = selectedCategory
         transaction.notes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
         transaction.paymentMethod = transaction.type == .income ? .debit : paymentMethod
+        transaction.financialCycleOverrideStartDate = FinancialCycleAllocation.revalidated(financialCycleOverrideStart, for: date)
         do {
             try modelContext.save()
             dismiss()

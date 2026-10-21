@@ -75,6 +75,10 @@ final class Transaction {
     var totalInstallments: Int?
     var sourcePurchaseID: UUID?
     @Attribute(.unique) var sourceFixedBillOccurrenceID: UUID?
+    /// Added in V3. Start of the financial cycle the user chose for this entry;
+    /// `nil` means the automatic, date-based cycle. Never changes `date`,
+    /// the card invoice or installment metadata.
+    var financialCycleOverrideStartDate: Date?
 
     var paymentMethod: PaymentMethod {
         get {
@@ -101,7 +105,8 @@ final class Transaction {
         installmentNumber: Int? = nil,
         totalInstallments: Int? = nil,
         sourcePurchaseID: UUID? = nil,
-        sourceFixedBillOccurrenceID: UUID? = nil
+        sourceFixedBillOccurrenceID: UUID? = nil,
+        financialCycleOverrideStartDate: Date? = nil
     ) {
         self.id = id
         self.title = title
@@ -119,12 +124,21 @@ final class Transaction {
         self.totalInstallments = totalInstallments
         self.sourcePurchaseID = sourcePurchaseID
         self.sourceFixedBillOccurrenceID = sourceFixedBillOccurrenceID
+        self.financialCycleOverrideStartDate = financialCycleOverrideStartDate
     }
 
-    /// Date that places the transaction in a financial cycle.
-    /// Credit-card purchases count as spending when they are made, one
-    /// installment per cycle; the invoice only governs limit and payment.
+    /// Date that places the transaction in a financial cycle. Every cycle
+    /// total reads this, while activity lists keep using `date`.
+    ///
+    /// A manual cycle choice wins. Otherwise credit-card purchases count when
+    /// they are made, one installment per cycle; the invoice only governs
+    /// limit and payment.
     var effectiveFinancialDate: Date {
+        financialCycleOverrideStartDate ?? automaticFinancialDate
+    }
+
+    /// The date-based attribution, ignoring any manual cycle choice.
+    var automaticFinancialDate: Date {
         guard paymentMethod == .creditCard,
               let installmentNumber,
               installmentNumber > 1 else {
@@ -136,6 +150,14 @@ final class Transaction {
             value: installmentNumber - 1,
             to: date
         ) ?? date
+    }
+
+    var effectiveFinancialCycle: FinancialCycle? {
+        FinancialCycle(containing: effectiveFinancialDate)
+    }
+
+    var hasManualFinancialCycle: Bool {
+        financialCycleOverrideStartDate != nil
     }
 
     var invoiceDueDate: Date? {

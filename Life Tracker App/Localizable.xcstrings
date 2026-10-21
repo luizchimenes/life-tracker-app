@@ -1243,6 +1243,16 @@
         }
       }
     },
+    "Add by Voice" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicionar por Voz"
+          }
+        }
+      }
+    },
     "Add obligations that require monthly payment confirmation." : {
       "localizations" : {
         "pt-BR" : {
@@ -1433,6 +1443,16 @@
         }
       }
     },
+    "Automatic" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automático"
+          }
+        }
+      }
+    },
     "Automatic Recurring" : {
       "localizations" : {
         "pt-BR" : {
@@ -1449,6 +1469,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Despesas recorrentes automáticas"
+          }
+        }
+      }
+    },
+    "Automatic — %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automático — %@"
           }
         }
       }
@@ -1723,6 +1753,76 @@
         }
       }
     },
+    "Change Financial Cycle" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alterar Ciclo Financeiro"
+          }
+        }
+      }
+    },
+    "Check the fields below, then tap Save. Nothing is saved until you do." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confira os campos abaixo e toque em Salvar. Nada é salvo antes disso."
+          }
+        }
+      }
+    },
+    "Check whether this is an expense, income or investment." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confira se é despesa, receita ou investimento."
+          }
+        }
+      }
+    },
+    "Choose a card" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolha um cartão"
+          }
+        }
+      }
+    },
+    "Choose a category" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolha uma categoria"
+          }
+        }
+      }
+    },
+    "Choose a category." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolha uma categoria."
+          }
+        }
+      }
+    },
+    "Choose which credit card was used." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolha qual cartão de crédito foi usado."
+          }
+        }
+      }
+    },
     "Close to Budget" : {
       "localizations" : {
         "pt-BR" : {
@@ -1869,6 +1969,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Para corrigir este pagamento, desfaça-o em Contas a Pagar e confirme o pagamento de novo."
+          }
+        }
+      }
+    },
+    "Count in Financial Cycle" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contar no ciclo financeiro"
           }
         }
       }
@@ -2033,6 +2143,16 @@
         }
       }
     },
+    "Cycle set manually" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciclo definido manualmente"
+          }
+        }
+      }
+    },
     "Daily Spending" : {
       "localizations" : {
         "pt-BR" : {
@@ -2059,6 +2179,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Data"
+          }
+        }
+      }
+    },
+    "Date %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data %@"
           }
         }
       }
@@ -2359,6 +2489,26 @@
         }
       }
     },
+    "Enter Manually" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digitar Manualmente"
+          }
+        }
+      }
+    },
+    "Enter a title." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digite um título."
+          }
+        }
+      }
+    },
     "Enter an amount greater than zero." : {
       "localizations" : {
         "pt-BR" : {
@@ -2619,16 +2769,6 @@
         }
       }
     },
-    "Financial Date" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Data Financeira"
-          }
-        }
-      }
-    },
     "Financial Report" : {
       "localizations" : {
         "pt-BR" : {
@@ -2859,6 +2999,16 @@
         }
       }
     },
+    "Heard: %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvido: %@"
+          }
+        }
+      }
+    },
     "Home" : {
       "localizations" : {
         "pt-BR" : {
@@ -2939,6 +3089,16 @@
         }
       }
     },
+    "Installment 1 counts in the chosen cycle and each later installment in the following cycles. Invoices are not changed." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A parcela 1 conta no ciclo escolhido e cada parcela seguinte nos ciclos seguintes. As faturas não mudam."
+          }
+        }
+      }
+    },
     "Installment Plan" : {
       "localizations" : {
         "pt-BR" : {
@@ -2965,16 +3125,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cronograma de Parcelas"
-          }
-        }
-      }
-    },
-    "Installment counted in this financial cycle" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Parcela contabilizada neste ciclo financeiro"
           }
         }
       }
@@ -3025,6 +3175,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "As parcelas precisam ser excluídas juntas, pelo resumo da compra parcelada."
+          }
+        }
+      }
+    },
+    "Installments need a credit card. Choose the card or remove the installments." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parcelamento precisa de cartão de crédito. Escolha o cartão ou remova o parcelamento."
           }
         }
       }
@@ -3085,6 +3245,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Investimentos"
+          }
+        }
+      }
+    },
+    "Investments cannot be paid by credit card. Choose another payment method." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Investimentos não podem ser feitos no cartão de crédito. Escolha outra forma de pagamento."
           }
         }
       }
@@ -3239,6 +3409,26 @@
         }
       }
     },
+    "Listening" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvindo"
+          }
+        }
+      }
+    },
+    "Listening…" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvindo…"
+          }
+        }
+      }
+    },
     "Manage" : {
       "localizations" : {
         "pt-BR" : {
@@ -3285,6 +3475,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gerencie a compra parcelada completa"
+          }
+        }
+      }
+    },
+    "Manually Assigned" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Definido manualmente"
+          }
+        }
+      }
+    },
+    "Manually Assigned — %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Definido manualmente — %@"
           }
         }
       }
@@ -3339,6 +3549,16 @@
         }
       }
     },
+    "Microphone access is turned off for LifeTracker. Allow it in Settings to add transactions by voice." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O acesso ao microfone está desativado para o LifeTracker. Permita nos Ajustes para adicionar transações por voz."
+          }
+        }
+      }
+    },
     "Monthly" : {
       "localizations" : {
         "pt-BR" : {
@@ -3356,6 +3576,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Saldo do mês"
+          }
+        }
+      }
+    },
+    "More than one amount was heard. Enter the correct amount." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mais de um valor foi ouvido. Digite o valor correto."
+          }
+        }
+      }
+    },
+    "More than one card matches. Choose the card." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mais de um cartão corresponde. Escolha o cartão."
+          }
+        }
+      }
+    },
+    "More than one payment method was heard. Choose the right one." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mais de uma forma de pagamento foi ouvida. Escolha a correta."
           }
         }
       }
@@ -3426,6 +3676,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Próximo Ciclo"
+          }
+        }
+      }
+    },
+    "Next Cycle — %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximo ciclo — %@"
           }
         }
       }
@@ -3506,6 +3766,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nenhuma Transação"
+          }
+        }
+      }
+    },
+    "No amount was recognized. Enter the amount." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum valor foi reconhecido. Digite o valor."
           }
         }
       }
@@ -3651,6 +3921,16 @@
         }
       }
     },
+    "No payment method was recognized. Check the payment method." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhuma forma de pagamento foi reconhecida. Confira a forma de pagamento."
+          }
+        }
+      }
+    },
     "No percentage comparison" : {
       "localizations" : {
         "pt-BR" : {
@@ -3667,6 +3947,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sem comparação com o ciclo anterior"
+          }
+        }
+      }
+    },
+    "No registered card matches “%@”. Choose the card." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum cartão cadastrado corresponde a “%@”. Escolha o cartão."
           }
         }
       }
@@ -3731,6 +4021,16 @@
         }
       }
     },
+    "Nothing was heard. Try again closer to the microphone." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nada foi ouvido. Tente de novo mais perto do microfone."
+          }
+        }
+      }
+    },
     "OK" : {
       "localizations" : {
         "pt-BR" : {
@@ -3771,6 +4071,16 @@
         }
       }
     },
+    "Only changes which cycle's totals include this entry. The date, card invoice and installments stay the same." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muda só em qual ciclo os totais incluem este lançamento. A data, a fatura do cartão e as parcelas continuam iguais."
+          }
+        }
+      }
+    },
     "Only the linked payment transaction will be deleted. The bill will return to pending and its estimate will return to projections." : {
       "localizations" : {
         "pt-BR" : {
@@ -3797,6 +4107,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aberta"
+          }
+        }
+      }
+    },
+    "Open Settings" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Ajustes"
           }
         }
       }
@@ -4041,12 +4361,42 @@
         }
       }
     },
+    "Preparing microphone" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparando o microfone"
+          }
+        }
+      }
+    },
+    "Preparing microphone…" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparando o microfone…"
+          }
+        }
+      }
+    },
     "Previous Cycle" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ciclo Anterior"
+          }
+        }
+      }
+    },
+    "Previous Cycle — %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciclo anterior — %@"
           }
         }
       }
@@ -4303,6 +4653,26 @@
         }
       }
     },
+    "Recognized by Apple's servers for this session. Audio is not stored." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reconhecido pelos servidores da Apple nesta sessão. O áudio não é guardado."
+          }
+        }
+      }
+    },
+    "Recognized on this iPhone. Audio is not stored." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reconhecido neste iPhone. O áudio não é guardado."
+          }
+        }
+      }
+    },
     "Reconciled: statement and category totals match the cycle summary." : {
       "localizations" : {
         "pt-BR" : {
@@ -4359,6 +4729,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Transações Recorrentes"
+          }
+        }
+      }
+    },
+    "Recurring and fixed-bill entries always use their automatic financial cycle." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lançamentos recorrentes e de gastos fixos sempre usam o ciclo financeiro automático."
           }
         }
       }
@@ -4469,6 +4849,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Voltar para Pendente"
+          }
+        }
+      }
+    },
+    "Review Transaction" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Revisar Transação"
           }
         }
       }
@@ -4623,6 +5013,56 @@
         }
       }
     },
+    "Speak in Brazilian Portuguese, for example:" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fale em português, por exemplo:"
+          }
+        }
+      }
+    },
+    "Speech recognition failed: %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O reconhecimento de fala falhou: %@"
+          }
+        }
+      }
+    },
+    "Speech recognition for Brazilian Portuguese is not available right now." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O reconhecimento de fala em português não está disponível agora."
+          }
+        }
+      }
+    },
+    "Speech recognition is restricted on this device." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O reconhecimento de fala está restrito neste aparelho."
+          }
+        }
+      }
+    },
+    "Speech recognition is turned off for LifeTracker. Allow it in Settings to add transactions by voice." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O reconhecimento de fala está desativado para o LifeTracker. Permita nos Ajustes para adicionar transações por voz."
+          }
+        }
+      }
+    },
     "Spending" : {
       "localizations" : {
         "pt-BR" : {
@@ -4723,6 +5163,16 @@
         }
       }
     },
+    "Stop" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parar"
+          }
+        }
+      }
+    },
     "Subscriptions" : {
       "localizations" : {
         "pt-BR" : {
@@ -4789,6 +5239,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "A conta vinculada volta a ficar pendente e a estimativa volta para as projeções."
+          }
+        }
+      }
+    },
+    "The microphone could not start: %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível iniciar o microfone: %@"
+          }
+        }
+      }
+    },
+    "The number of installments was not understood. Check the installments." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O número de parcelas não foi entendido. Confira o parcelamento."
           }
         }
       }
@@ -4889,6 +5359,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Este ciclo já terminou, então o gasto projetado é igual ao gasto registrado."
+          }
+        }
+      }
+    },
+    "This financial cycle cannot be chosen for this date." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este ciclo financeiro não pode ser escolhido para esta data."
+          }
+        }
+      }
+    },
+    "This iPhone cannot recognize Brazilian Portuguese on device. You can let Apple's servers recognize this phrase, or enter it manually." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este iPhone não consegue reconhecer português no próprio aparelho. Você pode deixar os servidores da Apple reconhecerem esta frase ou digitar manualmente."
           }
         }
       }
@@ -5143,6 +5633,16 @@
         }
       }
     },
+    "Try Again" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tentar de Novo"
+          }
+        }
+      }
+    },
     "Type" : {
       "localizations" : {
         "pt-BR" : {
@@ -5263,6 +5763,16 @@
         }
       }
     },
+    "Use Apple's Servers This Time" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usar os Servidores da Apple Desta Vez"
+          }
+        }
+      }
+    },
     "Used" : {
       "localizations" : {
         "pt-BR" : {
@@ -5309,6 +5819,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ver Todas as Transações"
+          }
+        }
+      }
+    },
+    "Voice Entry" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrada por Voz"
+          }
+        }
+      }
+    },
+    "Voice recognition on this iPhone needs Dictation. Turn it on in Settings › General › Keyboard › Enable Dictation, then try again." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O reconhecimento de voz no iPhone precisa do Ditado. Ative em Ajustes › Geral › Teclado › Ativar Ditado e tente de novo."
           }
         }
       }

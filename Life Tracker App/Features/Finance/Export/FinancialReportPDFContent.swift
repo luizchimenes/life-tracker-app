@@ -677,6 +677,12 @@ extension FinancialReportPDFContent {
                     details.append(text("Invoice due \(shortDate(due))"))
                 }
             }
+            if transaction.hasManualFinancialCycle {
+                if transaction.paymentMethod != .creditCard {
+                    details.append(text("Date \(shortDate(transaction.date))"))
+                }
+                details.append(text("Cycle set manually"))
+            }
             switch transaction.sourceKind {
             case .recurring: details.append(text("Recurring"))
             case .fixedBill: details.append(text("Fixed bill"))

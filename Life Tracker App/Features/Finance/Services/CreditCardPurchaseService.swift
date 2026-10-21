@@ -13,6 +13,7 @@ enum CreditCardPurchaseService {
         installmentCount: Int,
         sourceRecurringTransactionID: UUID? = nil,
         recurringOccurrenceID: String? = nil,
+        financialCycleOverrideStart: Date? = nil,
         in modelContext: ModelContext,
         calendar: Calendar = .current
     ) throws {
@@ -47,7 +48,13 @@ enum CreditCardPurchaseService {
                     creditCardInvoice: invoice,
                     installmentNumber: index + 1,
                     totalInstallments: count,
-                    sourcePurchaseID: sourcePurchaseID
+                    sourcePurchaseID: sourcePurchaseID,
+                    // A manual choice moves installment 1; the rest follow one cycle apart.
+                    financialCycleOverrideStartDate: FinancialCycleAllocation.overrideStart(
+                        forInstallmentAt: index,
+                        firstStart: financialCycleOverrideStart,
+                        calendar: calendar
+                    )
                 )
             )
         }
