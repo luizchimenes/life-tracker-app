@@ -4,12 +4,12 @@ import SwiftData
 // How to change a persisted model
 //
 // The newest schema references the live model classes. Older schemas are
-// frozen copies of what is stored on devices (LifeTrackerSchemaV1/V2.swift).
+// frozen copies of what is stored on devices (LifeTrackerSchemaV1/V2/V3.swift).
 // Before a change that alters the stored shape:
 //
 // 1. Copy every current @Model definition into a new frozen file for the
-//    current version (e.g. LifeTrackerSchemaV3.swift), nested in its enum.
-// 2. Create the next schema (e.g. LifeTrackerSchemaV4) listing the live
+//    current version (e.g. LifeTrackerSchemaV4.swift), nested in its enum.
+// 2. Create the next schema (e.g. LifeTrackerSchemaV5) listing the live
 //    classes, then change the live classes.
 // 3. Add a `MigrationStage` (`.lightweight` for additive or optional changes,
 //    `.custom` when values must be transformed).
@@ -21,11 +21,10 @@ import SwiftData
 // Never ship a model change without a new version: a store whose shape matches
 // no listed schema fails to open.
 
-/// V3 adds an optional manual financial-cycle allocation to transactions.
-/// `nil` keeps the automatic, date-based cycle, so every V2 transaction
-/// migrates with its behavior unchanged.
-enum LifeTrackerSchemaV3: VersionedSchema {
-    static let versionIdentifier = Schema.Version(3, 0, 0)
+/// V4 adds Habits: habits, their schedule history and daily completions.
+/// Purely additive, so every V3 store migrates with Finance data unchanged.
+enum LifeTrackerSchemaV4: VersionedSchema {
+    static let versionIdentifier = Schema.Version(4, 0, 0)
 
     static var models: [any PersistentModel.Type] {
         [
@@ -37,19 +36,27 @@ enum LifeTrackerSchemaV3: VersionedSchema {
             CreditCard.self,
             CreditCardInvoice.self,
             FixedBill.self,
-            FixedBillOccurrence.self
+            FixedBillOccurrence.self,
+            Habit.self,
+            HabitScheduleVersion.self,
+            HabitCompletion.self
         ]
     }
 }
 
 enum LifeTrackerMigrationPlan: SchemaMigrationPlan {
     static var schemas: [any VersionedSchema.Type] {
-        [LifeTrackerSchemaV1.self, LifeTrackerSchemaV2.self, LifeTrackerSchemaV3.self]
+        [LifeTrackerSchemaV1.self, LifeTrackerSchemaV2.self, LifeTrackerSchemaV3.self, LifeTrackerSchemaV4.self]
     }
 
     static var stages: [MigrationStage] {
-        [migrateV1toV2, migrateV2toV3]
+        [migrateV1toV2, migrateV2toV3, migrateV3toV4]
     }
+
+    static let migrateV3toV4 = MigrationStage.lightweight(
+        fromVersion: LifeTrackerSchemaV3.self,
+        toVersion: LifeTrackerSchemaV4.self
+    )
 
     static let migrateV2toV3 = MigrationStage.lightweight(
         fromVersion: LifeTrackerSchemaV2.self,
@@ -65,7 +72,7 @@ enum LifeTrackerMigrationPlan: SchemaMigrationPlan {
 /// Single source of truth for the schema and container used by the app,
 /// previews and tests.
 enum LifeTrackerPersistence {
-    static let currentSchema: any VersionedSchema.Type = LifeTrackerSchemaV3.self
+    static let currentSchema: any VersionedSchema.Type = LifeTrackerSchemaV4.self
 
     static var schema: Schema {
         Schema(versionedSchema: currentSchema)

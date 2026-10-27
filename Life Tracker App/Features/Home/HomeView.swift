@@ -6,8 +6,10 @@ struct HomeView: View {
     @Query private var recurringTransactions: [RecurringTransaction]
     @Query private var fixedBillOccurrences: [FixedBillOccurrence]
     @Query private var creditCardInvoices: [CreditCardInvoice]
+    @Query(sort: \Habit.sortOrder) private var habits: [Habit]
 
     let onSeeFinance: () -> Void
+    let onSeeHabits: () -> Void
 
     private var overview: FinanceOverview {
         FinanceOverview(
@@ -22,8 +24,9 @@ struct HomeView: View {
         TransactionActivity.recent(from: transactions, limit: 3)
     }
 
-    init(onSeeFinance: @escaping () -> Void = {}) {
+    init(onSeeFinance: @escaping () -> Void = {}, onSeeHabits: @escaping () -> Void = {}) {
         self.onSeeFinance = onSeeFinance
+        self.onSeeHabits = onSeeHabits
     }
 
     var body: some View {
@@ -79,7 +82,11 @@ struct HomeView: View {
                     Text("Today")
                         .font(.title2.bold())
 
-                    PlaceholderCard(title: "Today's habits", value: "No habits scheduled", systemImage: "checkmark.circle", tint: .blue)
+                    Text("Today's Habits")
+                        .font(.headline)
+
+                    HomeHabitsSummaryView(summary: HabitsTodaySummary(habits: habits), onSeeHabits: onSeeHabits)
+
                     PlaceholderCard(title: "Today's tasks", value: "No tasks scheduled", systemImage: "list.bullet", tint: .orange)
                 }
                 .padding()

@@ -31,6 +31,16 @@
         }
       }
     },
+    "%@ (%lld of %lld)" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ (%2$lld de %3$lld)"
+          }
+        }
+      }
+    },
     "%@ (%lld)" : {
       "localizations" : {
         "en" : {
@@ -309,6 +319,76 @@
         }
       }
     },
+    "%@, before the habit started" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, antes do início do hábito"
+          }
+        }
+      }
+    },
+    "%@, completed" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, concluído"
+          }
+        }
+      }
+    },
+    "%@, missed" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, não feito"
+          }
+        }
+      }
+    },
+    "%@, not done yet" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, ainda não feito"
+          }
+        }
+      }
+    },
+    "%@, not scheduled" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, não programado"
+          }
+        }
+      }
+    },
+    "%@, upcoming" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, ainda vai chegar"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
     "%lld active recurring expenses" : {
       "localizations" : {
         "en" : {
@@ -422,6 +502,58 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "%lld no cartão de crédito"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld days" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld days"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld days"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld dia"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld dias"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld dias"
                 }
               }
             }
@@ -583,6 +715,46 @@
         }
       }
     },
+    "%lld in a row" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld in a row"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld in a row"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "sequência de %lld"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "sequência de %lld"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld installments • %@" : {
       "localizations" : {
         "en" : {
@@ -675,6 +847,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld de %2$lld"
+          }
+        }
+      }
+    },
+    "%lld of %lld done" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld de %2$lld feitos"
           }
         }
       }
@@ -1017,6 +1199,16 @@
         }
       }
     },
+    "+ %lld more" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ %lld outros"
+          }
+        }
+      }
+    },
     "1 fixed commitment remains unpaid." : {
       "localizations" : {
         "pt-BR" : {
@@ -1179,6 +1371,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Novo Gasto Fixo"
+          }
+        }
+      }
+    },
+    "Add Habit" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicionar Hábito"
           }
         }
       }
@@ -1423,6 +1625,56 @@
         }
       }
     },
+    "Archive Habit" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arquivar Hábito"
+          }
+        }
+      }
+    },
+    "Archive this habit?" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arquivar este hábito?"
+          }
+        }
+      }
+    },
+    "Archived" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arquivado"
+          }
+        }
+      }
+    },
+    "Archived Habits" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hábitos Arquivados"
+          }
+        }
+      }
+    },
+    "Archived habits keep their history and can be reactivated." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hábitos arquivados mantêm o histórico e podem ser reativados."
+          }
+        }
+      }
+    },
     "Ask about your finances, habits, and tasks here in a future update." : {
       "localizations" : {
         "pt-BR" : {
@@ -1519,6 +1771,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Saldo (Receitas − Despesas)"
+          }
+        }
+      }
+    },
+    "Best Streak" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melhor Sequência"
           }
         }
       }
@@ -1813,6 +2075,16 @@
         }
       }
     },
+    "Choose at least one day of the week." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolha pelo menos um dia da semana."
+          }
+        }
+      }
+    },
     "Choose which credit card was used." : {
       "localizations" : {
         "pt-BR" : {
@@ -1923,6 +2195,36 @@
         }
       }
     },
+    "Completed" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Concluídos"
+          }
+        }
+      }
+    },
+    "Completion Rate" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taxa de Conclusão"
+          }
+        }
+      }
+    },
+    "Completion rate counts only scheduled days in the last 30 days. Days without the habit scheduled never count as missed." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A taxa de conclusão considera só os dias programados dos últimos 30 dias. Dias sem o hábito programado nunca contam como falta."
+          }
+        }
+      }
+    },
     "Configured" : {
       "localizations" : {
         "pt-BR" : {
@@ -1979,6 +2281,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contar no ciclo financeiro"
+          }
+        }
+      }
+    },
+    "Create a habit to track it every day and build a streak." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crie um hábito para acompanhar todo dia e construir uma sequência."
+          }
+        }
+      }
+    },
+    "Create your first habit in the Habits tab." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crie seu primeiro hábito na aba Hábitos."
           }
         }
       }
@@ -2099,6 +2421,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Parcela Atual"
+          }
+        }
+      }
+    },
+    "Current Streak" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sequência Atual"
           }
         }
       }
@@ -2303,6 +2635,16 @@
         }
       }
     },
+    "Description (optional)" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descrição (opcional)"
+          }
+        }
+      }
+    },
     "Details" : {
       "localizations" : {
         "pt-BR" : {
@@ -2329,6 +2671,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
+          }
+        }
+      }
+    },
+    "Done today" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feito hoje"
+          }
+        }
+      }
+    },
+    "Double-tap to mark as done" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toque duas vezes para marcar como feito"
+          }
+        }
+      }
+    },
+    "Double-tap to unmark" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toque duas vezes para desmarcar"
           }
         }
       }
@@ -2439,6 +2811,16 @@
         }
       }
     },
+    "Edit Habit" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar Hábito"
+          }
+        }
+      }
+    },
     "Edit Recurring Transaction" : {
       "localizations" : {
         "pt-BR" : {
@@ -2495,6 +2877,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Digitar Manualmente"
+          }
+        }
+      }
+    },
+    "Enter a name for the habit." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digite um nome para o hábito."
           }
         }
       }
@@ -2565,6 +2957,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Total estimado"
+          }
+        }
+      }
+    },
+    "Every Day" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todo Dia"
+          }
+        }
+      }
+    },
+    "Every day" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todo dia"
           }
         }
       }
@@ -2959,6 +3371,16 @@
         }
       }
     },
+    "Future days cannot be completed yet." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dias futuros ainda não podem ser concluídos."
+          }
+        }
+      }
+    },
     "Generated on %@" : {
       "localizations" : {
         "pt-BR" : {
@@ -3005,6 +3427,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ouvido: %@"
+          }
+        }
+      }
+    },
+    "History" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Histórico"
           }
         }
       }
@@ -3329,6 +3761,16 @@
         }
       }
     },
+    "It leaves your daily list. Its history is kept and you can reactivate it later." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ele sai da sua lista diária. O histórico é mantido e você pode reativá-lo depois."
+          }
+        }
+      }
+    },
     "Known estimate" : {
       "localizations" : {
         "pt-BR" : {
@@ -3499,6 +3941,26 @@
         }
       }
     },
+    "Mark %@ as done" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marcar %@ como feito"
+          }
+        }
+      }
+    },
+    "Mark %@ as not done" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marcar %@ como não feito"
+          }
+        }
+      }
+    },
     "Mark Bill Paid" : {
       "localizations" : {
         "pt-BR" : {
@@ -3515,6 +3977,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Marcar como Paga"
+          }
+        }
+      }
+    },
+    "Mark as done today" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marcar como feito hoje"
           }
         }
       }
@@ -3555,6 +4027,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "O acesso ao microfone está desativado para o LifeTracker. Permita nos Ajustes para adicionar transações por voz."
+          }
+        }
+      }
+    },
+    "Missed" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não feito"
           }
         }
       }
@@ -3650,6 +4132,16 @@
         }
       }
     },
+    "New Habit" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novo Hábito"
+          }
+        }
+      }
+    },
     "New Recurring Transaction" : {
       "localizations" : {
         "pt-BR" : {
@@ -3690,12 +4182,32 @@
         }
       }
     },
+    "Next Month" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximo Mês"
+          }
+        }
+      }
+    },
     "Next invoice: %@ • %@ • closes %@" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Próxima fatura: %1$@ • %2$@ • fecha em %3$@"
+          }
+        }
+      }
+    },
+    "No Archived Habits" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum Hábito Arquivado"
           }
         }
       }
@@ -3736,6 +4248,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nenhum Gasto Fixo"
+          }
+        }
+      }
+    },
+    "No Habits Yet" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum Hábito Ainda"
           }
         }
       }
@@ -3891,12 +4413,22 @@
         }
       }
     },
-    "No habits scheduled" : {
+    "No habits are scheduled today." : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nenhum hábito programado"
+            "value" : "Nenhum hábito programado para hoje."
+          }
+        }
+      }
+    },
+    "No habits are scheduled today. Enjoy the rest day." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum hábito programado para hoje. Aproveite o descanso."
           }
         }
       }
@@ -3991,12 +4523,42 @@
         }
       }
     },
+    "Not Scheduled Today" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não Programados Hoje"
+          }
+        }
+      }
+    },
     "Not estimated" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sem estimativa"
+          }
+        }
+      }
+    },
+    "Not scheduled" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não programado"
+          }
+        }
+      }
+    },
+    "Not scheduled today" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não programado hoje"
           }
         }
       }
@@ -4411,6 +4973,16 @@
         }
       }
     },
+    "Previous Month" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mês Anterior"
+          }
+        }
+      }
+    },
     "Previous cycle" : {
       "localizations" : {
         "pt-BR" : {
@@ -4643,6 +5215,26 @@
         }
       }
     },
+    "Reactivate Habit" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reativar Hábito"
+          }
+        }
+      }
+    },
+    "Reactivate the habit to change its history." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reative o hábito para alterar o histórico."
+          }
+        }
+      }
+    },
     "Recent Activity" : {
       "localizations" : {
         "pt-BR" : {
@@ -4863,16 +5455,6 @@
         }
       }
     },
-    "Routine" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rotina"
-          }
-        }
-      }
-    },
     "Rule" : {
       "localizations" : {
         "pt-BR" : {
@@ -4913,6 +5495,16 @@
         }
       }
     },
+    "Schedule changes apply from today on. Past days keep the schedule they had, so your history is not rewritten." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mudanças na frequência valem de hoje em diante. Os dias passados mantêm a frequência que tinham, então o histórico não é reescrito."
+          }
+        }
+      }
+    },
     "Scheduled" : {
       "localizations" : {
         "pt-BR" : {
@@ -4939,6 +5531,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ver Finanças"
+          }
+        }
+      }
+    },
+    "See Habits" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver Hábitos"
           }
         }
       }
@@ -5019,6 +5621,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fale em português, por exemplo:"
+          }
+        }
+      }
+    },
+    "Specific Days" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dias Específicos"
           }
         }
       }
@@ -5143,6 +5755,16 @@
         }
       }
     },
+    "Statistics" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estatísticas"
+          }
+        }
+      }
+    },
     "Status" : {
       "localizations" : {
         "pt-BR" : {
@@ -5223,12 +5845,12 @@
         }
       }
     },
-    "Tasks" : {
+    "That day is before the habit started." : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tarefas"
+            "value" : "Esse dia é anterior ao início do hábito."
           }
         }
       }
@@ -5289,6 +5911,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Este Ciclo"
+          }
+        }
+      }
+    },
+    "This Week" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta Semana"
           }
         }
       }
@@ -5369,6 +6001,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Este ciclo financeiro não pode ser escolhido para esta data."
+          }
+        }
+      }
+    },
+    "This habit is not scheduled on that day." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este hábito não está programado nesse dia."
           }
         }
       }
@@ -5473,6 +6115,16 @@
         }
       }
     },
+    "To Do" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Fazer"
+          }
+        }
+      }
+    },
     "Today" : {
       "localizations" : {
         "pt-BR" : {
@@ -5483,12 +6135,12 @@
         }
       }
     },
-    "Today's habits" : {
+    "Today's Habits" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hábitos de hoje"
+            "value" : "Hábitos de Hoje"
           }
         }
       }
@@ -5529,6 +6181,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Total"
+          }
+        }
+      }
+    },
+    "Total Completed" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Concluído"
           }
         }
       }
@@ -5713,6 +6375,16 @@
         }
       }
     },
+    "Unable to Update Habit" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não Foi Possível Atualizar o Hábito"
+          }
+        }
+      }
+    },
     "Unable to Update Invoice" : {
       "localizations" : {
         "pt-BR" : {
@@ -5873,32 +6545,12 @@
         }
       }
     },
-    "Your daily habits will appear here" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seus hábitos diários vão aparecer aqui"
-          }
-        }
-      }
-    },
     "Your data was not changed or deleted. Install an update that fixes this, or contact the developer." : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seus dados não foram alterados nem apagados. Instale uma atualização que corrija isso ou fale com o desenvolvedor."
-          }
-        }
-      }
-    },
-    "Your tasks will appear here" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Suas tarefas vão aparecer aqui"
           }
         }
       }
@@ -5929,6 +6581,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "~ %@"
+          }
+        }
+      }
+    },
+    "—" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "—"
           }
         }
       }

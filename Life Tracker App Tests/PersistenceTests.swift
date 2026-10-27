@@ -6,6 +6,9 @@ import Testing
 @Suite("Persistence")
 @MainActor
 struct PersistenceTests {
+    private let habitEntities: Set<String> = ["Habit", "HabitScheduleVersion", "HabitCompletion"]
+
+    /// Finance entities, present in every schema version.
     private let expectedEntities: Set<String> = [
         "Transaction",
         "TransactionCategory",
@@ -19,7 +22,9 @@ struct PersistenceTests {
     ]
 
     @Test func currentSchemaContainsEveryPersistedModel() {
-        #expect(Set(LifeTrackerPersistence.schema.entities.map(\.name)) == expectedEntities)
+        #expect(Set(LifeTrackerPersistence.schema.entities.map(\.name)) == expectedEntities.union(habitEntities))
+        #expect(LifeTrackerSchemaV4.versionIdentifier == Schema.Version(4, 0, 0))
+        #expect(Set(Schema(versionedSchema: LifeTrackerSchemaV3.self).entities.map(\.name)) == expectedEntities)
         #expect(LifeTrackerSchemaV1.versionIdentifier == Schema.Version(1, 0, 0))
         #expect(LifeTrackerSchemaV2.versionIdentifier == Schema.Version(2, 0, 0))
         #expect(LifeTrackerSchemaV3.versionIdentifier == Schema.Version(3, 0, 0))
@@ -35,7 +40,7 @@ struct PersistenceTests {
 
     @Test func inMemoryContainerUsesMigrationPlan() throws {
         let container = try LifeTrackerPersistence.makeContainer(inMemory: true)
-        #expect(Set(container.schema.entities.map(\.name)) == expectedEntities)
+        #expect(Set(container.schema.entities.map(\.name)) == expectedEntities.union(habitEntities))
         #expect(container.migrationPlan == LifeTrackerMigrationPlan.self)
     }
 
@@ -114,6 +119,58 @@ struct PersistenceTests {
         let transactions = try migrated.fetch(FetchDescriptor<Transaction>())
         #expect(transactions.allSatisfy { $0.financialCycleOverrideStartDate == nil })
         #expect(transactions.allSatisfy { $0.effectiveFinancialDate == $0.automaticFinancialDate })
+    }
+
+    /// A V3 store (Finance only) migrates to V4: every Finance record and the
+    /// manual cycle survive, and Habits start empty and usable.
+    @Test func v3StoreMigratesToCurrentSchema() throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appending(path: "LifeTrackerV3Store-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let storeURL = directory.appending(path: "default.store")
+
+        try autoreleasepool {
+            let v3Schema = Schema(versionedSchema: LifeTrackerSchemaV3.self)
+            let v3 = try ModelContainer(for: v3Schema, migrationPlan: nil, configurations: [ModelConfiguration(schema: v3Schema, url: storeURL)])
+            let context = ModelContext(v3)
+            FixtureV3.insert(into: context)
+            try context.save()
+        }
+
+        let migrated = ModelContext(try LifeTrackerPersistence.makeContainer(storeURL: storeURL))
+        try Fixture.verify(migrated)
+        let lunch = try #require(try migrated.fetch(FetchDescriptor<Transaction>()).first)
+        #expect(lunch.financialCycleOverrideStartDate == Date(timeIntervalSince1970: 1_791_000_000))
+        #expect(try migrated.fetch(FetchDescriptor<RecurringTransaction>()).first?.paymentMethod == .creditCard)
+        #expect(try migrated.fetchCount(FetchDescriptor<Habit>()) == 0)
+
+        let habit = try HabitService.create(name: "Gym", iconName: "dumbbell.fill", colorName: "blue", schedule: .everyDay, startDate: .now, in: migrated)
+        try HabitService.setCompleted(habit, on: HabitDay(.now), in: migrated)
+        let reopened = ModelContext(try LifeTrackerPersistence.makeContainer(storeURL: storeURL))
+        try Fixture.verify(reopened)
+        #expect(try reopened.fetch(FetchDescriptor<Habit>()).first?.completions.count == 1)
+    }
+}
+
+/// The same data set written with the frozen V3 types (with a manual cycle).
+@MainActor
+enum FixtureV3 {
+    static func insert(into context: ModelContext) {
+        typealias V3 = LifeTrackerSchemaV3
+        let food = V3.TransactionCategory(name: "Food", iconName: "fork.knife", colorName: "orange", type: .expense, isDefault: true)
+        let card = V3.CreditCard(name: "Card", lastFourDigits: "1234", closingDay: 9, dueDay: 15, creditLimit: 1_000)
+        let invoice = V3.CreditCardInvoice(invoiceIdentifier: "card-2026-11", creditCard: card, referenceMonth: .distantPast, closingDate: .distantPast, dueDate: .distantPast)
+        let bill = V3.FixedBill(name: "Rent", category: food, dueDay: 10, estimatedAmount: 900, amountMode: .fixed, startDate: .distantPast, createdAt: .distantPast)
+        context.insert(food)
+        context.insert(card)
+        context.insert(invoice)
+        context.insert(bill)
+        context.insert(V3.Transaction(title: "Lunch", amount: 25, date: .distantPast, type: .expense, category: food, paymentMethodRawValue: PaymentMethod.creditCard.rawValue, creditCard: card, creditCardInvoice: invoice, installmentNumber: 1, totalInstallments: 2, financialCycleOverrideStartDate: Date(timeIntervalSince1970: 1_791_000_000)))
+        context.insert(V3.CategoryBudget(category: food, monthlyLimit: 500))
+        context.insert(V3.FinanceSettings(monthlySpendingBudget: 2_000))
+        context.insert(V3.RecurringTransaction(title: "Gym", amount: 100, type: .expense, category: food, startDate: .distantPast, dayOfMonth: 5, paymentMethodRawValue: PaymentMethod.creditCard.rawValue, creditCard: card))
+        context.insert(V3.FixedBillOccurrence(occurrenceIdentifier: "rent-2026-10", fixedBill: bill, dueDate: .distantPast, financialCycleIdentifier: "2026-10-9"))
     }
 }
 

@@ -4,7 +4,7 @@ import SwiftUI
 enum AppTab: Hashable {
     case home
     case finance
-    case routine
+    case habits
     case assistant
 }
 
@@ -17,17 +17,18 @@ struct AppTabView: View {
     var body: some View {
         TabView(selection: $selection) {
             Tab("Home", systemImage: "house", value: .home) {
-                HomeView {
-                    selection = .finance
-                }
+                HomeView(
+                    onSeeFinance: { selection = .finance },
+                    onSeeHabits: { selection = .habits }
+                )
             }
 
             Tab("Finance", systemImage: "chart.pie", value: .finance) {
                 FinanceView()
             }
 
-            Tab("Routine", systemImage: "checklist", value: .routine) {
-                RoutineView()
+            Tab("Habits", systemImage: "checkmark.circle", value: .habits) {
+                HabitsView()
             }
 
             Tab("Assistant", systemImage: "bubble.left.and.bubble.right", value: .assistant) {
