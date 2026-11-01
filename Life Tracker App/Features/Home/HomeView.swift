@@ -8,6 +8,10 @@ struct HomeView: View {
     @Query private var creditCardInvoices: [CreditCardInvoice]
     @Query(sort: \Habit.sortOrder) private var habits: [Habit]
 
+    @AppStorage(HomeLayout.orderKey) private var storedOrder = ""
+    @AppStorage(HomeLayout.hiddenKey) private var storedHidden = ""
+    @State private var showsCustomization = false
+
     let onSeeFinance: () -> Void
     let onSeeHabits: () -> Void
 
@@ -18,6 +22,10 @@ struct HomeView: View {
             fixedBillOccurrences: fixedBillOccurrences,
             creditCardInvoices: creditCardInvoices
         )
+    }
+
+    private var layout: HomeLayout {
+        HomeLayout(storedOrder: storedOrder, storedHidden: storedHidden)
     }
 
     private var recentTransactions: [Transaction] {
@@ -32,67 +40,110 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 16) {
-                    HStack {
-                        Text("Finance This Cycle")
-                            .font(.title2.bold())
-
-                        Spacer()
-
-                        Button("See Finance", action: onSeeFinance)
+                let sections = layout.visibleSections
+                if sections.isEmpty {
+                    ContentUnavailableView {
+                        Label("No sections visible", systemImage: "rectangle.stack")
+                    } description: {
+                        Text("Your data is still in its tabs. Choose what to show on Home.")
+                    } actions: {
+                        Button("Customize Home") { showsCustomization = true }
+                            .buttonStyle(.borderedProminent)
                     }
-
+                    .padding(.top, 48)
+                } else {
                     let overview = self.overview
-
-                    HomeFinanceSummaryView(overview: overview)
-
-                    if overview.bills.pendingCount > 0 || !overview.bills.upcomingInvoices.isEmpty {
-                        Text("Bills to Pay")
-                            .font(.headline)
-
-                        Button(action: onSeeFinance) {
-                            HomeBillsSummaryView(bills: overview.bills)
+                    LazyVStack(alignment: .leading, spacing: 16) {
+                        ForEach(sections) { section in
+                            content(for: section, overview: overview)
                         }
-                        .buttonStyle(.plain)
                     }
-
-                    Text("Recent Activity")
-                        .font(.headline)
-
-                    if recentTransactions.isEmpty {
-                        Text("No transactions yet")
-                            .foregroundStyle(.secondary)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding()
-                            .background(.background.secondary, in: .rect(cornerRadius: 16))
-                    } else {
-                        VStack(spacing: 0) {
-                            ForEach(recentTransactions) { transaction in
-                                TransactionRow(transaction: transaction)
-                                    .padding()
-
-                                if transaction.id != recentTransactions.last?.id {
-                                    Divider()
-                                }
-                            }
-                        }
-                        .background(.background.secondary, in: .rect(cornerRadius: 16))
-                    }
-
-                    Text("Today")
-                        .font(.title2.bold())
-
-                    Text("Today's Habits")
-                        .font(.headline)
-
-                    HomeHabitsSummaryView(summary: HabitsTodaySummary(habits: habits), onSeeHabits: onSeeHabits)
-
-                    PlaceholderCard(title: "Today's tasks", value: "No tasks scheduled", systemImage: "list.bullet", tint: .orange)
+                    .padding()
                 }
-                .padding()
             }
             .navigationTitle("Home")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Customize Home", systemImage: "slider.horizontal.3") {
+                        showsCustomization = true
+                    }
+                }
+            }
+            .sheet(isPresented: $showsCustomization) {
+                HomeCustomizationView()
+            }
         }
+    }
+
+    @ViewBuilder
+    private func content(for section: HomeSection, overview: FinanceOverview) -> some View {
+        switch section {
+        case .finance:
+            header(for: section) {
+                Button("See Finance", action: onSeeFinance)
+            }
+            HomeFinanceSummaryView(overview: overview)
+
+        case .billsToPay:
+            let bills = overview.bills
+            if bills.pendingCount > 0 || !bills.upcomingInvoices.isEmpty {
+                header(for: section)
+                Button(action: onSeeFinance) {
+                    HomeBillsSummaryView(bills: bills)
+                }
+                .buttonStyle(.plain)
+            }
+
+        case .recentActivity:
+            header(for: section)
+            if recentTransactions.isEmpty {
+                Text("No transactions yet")
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                    .background(.background.secondary, in: .rect(cornerRadius: 16))
+            } else {
+                VStack(spacing: 0) {
+                    ForEach(recentTransactions) { transaction in
+                        TransactionRow(transaction: transaction)
+                            .padding()
+
+                        if transaction.id != recentTransactions.last?.id {
+                            Divider()
+                        }
+                    }
+                }
+                .background(.background.secondary, in: .rect(cornerRadius: 16))
+            }
+
+        case .habits:
+            header(for: section)
+            HomeHabitsSummaryView(summary: HabitsTodaySummary(habits: habits), onSeeHabits: onSeeHabits)
+        }
+    }
+
+    /// Section title; touch and hold it to hide the section or customize Home.
+    private func header(for section: HomeSection, @ViewBuilder trailing: () -> some View = { EmptyView() }) -> some View {
+        HStack(alignment: .firstTextBaseline) {
+            Text(section.title)
+                .font(.title3.bold())
+                .accessibilityAddTraits(.isHeader)
+                .contextMenu {
+                    Button("Hide from Home", systemImage: "eye.slash") {
+                        var layout = self.layout
+                        layout.setVisible(false, for: section)
+                        storedHidden = layout.storedHidden
+                    }
+                    Button("Customize Home", systemImage: "slider.horizontal.3") {
+                        showsCustomization = true
+                    }
+                }
+
+            Spacer()
+
+            trailing()
+        }
+        .padding(.top, 4)
     }
 }
 

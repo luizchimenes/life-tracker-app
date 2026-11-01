@@ -1229,6 +1229,36 @@
         }
       }
     },
+    "A backup contains all your Finance and Habits data. It is a plain JSON file that anyone with access to it can read, so keep it somewhere private, like your iCloud Drive or Files." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O backup contém todos os seus dados de Finanças e Hábitos. É um arquivo JSON simples que qualquer pessoa com acesso a ele consegue ler, então guarde em um lugar privado, como o seu iCloud Drive ou o app Arquivos."
+          }
+        }
+      }
+    },
+    "A copy of the data you had before restoring was kept on this iPhone." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uma cópia dos dados que você tinha antes de restaurar foi mantida neste iPhone."
+          }
+        }
+      }
+    },
+    "A copy of your current data is saved on this iPhone before restoring. If anything fails, your current data stays as it is." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uma cópia dos seus dados atuais é salva neste iPhone antes de restaurar. Se algo falhar, seus dados atuais continuam como estão."
+          }
+        }
+      }
+    },
     "A. Recorded fixed / recurring spending" : {
       "localizations" : {
         "pt-BR" : {
@@ -1755,6 +1785,26 @@
         }
       }
     },
+    "Backup" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backup"
+          }
+        }
+      }
+    },
+    "Backup restored successfully" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backup restaurado com sucesso"
+          }
+        }
+      }
+    },
     "Balance" : {
       "localizations" : {
         "pt-BR" : {
@@ -1951,6 +2001,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cartão"
+          }
+        }
+      }
+    },
+    "Card Invoices" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faturas do Cartão"
           }
         }
       }
@@ -2255,6 +2315,16 @@
         }
       }
     },
+    "Contents" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conteúdo"
+          }
+        }
+      }
+    },
     "Correct payment from Bills to Pay" : {
       "localizations" : {
         "pt-BR" : {
@@ -2301,6 +2371,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Crie seu primeiro hábito na aba Hábitos."
+          }
+        }
+      }
+    },
+    "Created" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criado em"
           }
         }
       }
@@ -2455,6 +2535,16 @@
         }
       }
     },
+    "Customize Home" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personalizar Home"
+          }
+        }
+      }
+    },
     "Cycle" : {
       "localizations" : {
         "pt-BR" : {
@@ -2501,6 +2591,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gastos diários"
+          }
+        }
+      }
+    },
+    "Data & Backup" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dados e Backup"
+          }
+        }
+      }
+    },
+    "Data Version" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versão dos Dados"
           }
         }
       }
@@ -2701,6 +2811,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Toque duas vezes para desmarcar"
+          }
+        }
+      }
+    },
+    "Drag to change the order. Hiding a section only removes it from Home; its data stays in its tab." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arraste para mudar a ordem. Ocultar uma seção só a remove da Home; os dados continuam na aba dela."
           }
         }
       }
@@ -3071,12 +3191,42 @@
         }
       }
     },
+    "Export Backup" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportar Backup"
+          }
+        }
+      }
+    },
     "Export PDF" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Exportar PDF"
+          }
+        }
+      }
+    },
+    "Export Previous Data" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportar Dados Anteriores"
+          }
+        }
+      }
+    },
+    "File" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arquivo"
           }
         }
       }
@@ -3241,6 +3391,16 @@
         }
       }
     },
+    "Fixed Bill Payments" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocorrências de Gastos Fixos"
+          }
+        }
+      }
+    },
     "Fixed Bill Source" : {
       "localizations" : {
         "pt-BR" : {
@@ -3401,6 +3561,16 @@
         }
       }
     },
+    "Habit Completions" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conclusões de Hábitos"
+          }
+        }
+      }
+    },
     "Habits" : {
       "localizations" : {
         "pt-BR" : {
@@ -3427,6 +3597,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ouvido: %@"
+          }
+        }
+      }
+    },
+    "Hide from Home" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocultar da Home"
           }
         }
       }
@@ -4092,6 +4272,26 @@
         }
       }
     },
+    "Move Down" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mover para baixo"
+          }
+        }
+      }
+    },
+    "Move Up" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mover para cima"
+          }
+        }
+      }
+    },
     "Name" : {
       "localizations" : {
         "pt-BR" : {
@@ -4493,12 +4693,12 @@
         }
       }
     },
-    "No tasks scheduled" : {
+    "No sections visible" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nenhuma tarefa programada"
+            "value" : "Nenhuma seção visível"
           }
         }
       }
@@ -5385,6 +5585,26 @@
         }
       }
     },
+    "Replace All Data" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Substituir Todos os Dados"
+          }
+        }
+      }
+    },
+    "Replace all data?" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Substituir todos os dados?"
+          }
+        }
+      }
+    },
     "Report Unavailable" : {
       "localizations" : {
         "pt-BR" : {
@@ -5411,6 +5631,76 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Limpar Filtros"
+          }
+        }
+      }
+    },
+    "Restore Backup" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurar Backup"
+          }
+        }
+      }
+    },
+    "Restore Complete" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restauração Concluída"
+          }
+        }
+      }
+    },
+    "Restore Default Layout" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurar layout padrão"
+          }
+        }
+      }
+    },
+    "Restore Failed" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Falha na Restauração"
+          }
+        }
+      }
+    },
+    "Restored" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurado"
+          }
+        }
+      }
+    },
+    "Restoring backup" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurando backup"
+          }
+        }
+      }
+    },
+    "Restoring backup…" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurando backup…"
           }
         }
       }
@@ -5561,6 +5851,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Compras"
+          }
+        }
+      }
+    },
+    "Show on Home" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar na Home"
           }
         }
       }
@@ -5855,6 +6155,86 @@
         }
       }
     },
+    "The backup could not be prepared for restoring. Your current data was not changed." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível preparar o backup para restaurar. Seus dados atuais não foram alterados."
+          }
+        }
+      }
+    },
+    "The backup failed %lld integrity checks, so it cannot be restored. Your current data was not changed." : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "The backup failed %lld integrity check, so it cannot be restored. Your current data was not changed."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "The backup failed %lld integrity checks, so it cannot be restored. Your current data was not changed."
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "O backup falhou em %lld verificação de integridade e não pode ser restaurado. Seus dados atuais não foram alterados."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "O backup falhou em %lld verificações de integridade e não pode ser restaurado. Seus dados atuais não foram alterados."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "The backup file is damaged or incomplete." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O arquivo de backup está danificado ou incompleto."
+          }
+        }
+      }
+    },
+    "The backup has records that point to missing data." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O backup tem registros que apontam para dados que não existem."
+          }
+        }
+      }
+    },
+    "The file could not be read." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível ler o arquivo."
+          }
+        }
+      }
+    },
     "The linked bill returns to pending and its estimate returns to projections." : {
       "localizations" : {
         "pt-BR" : {
@@ -5905,6 +6285,26 @@
         }
       }
     },
+    "The restore could not be completed. Your current data was not changed." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível concluir a restauração. Seus dados atuais não foram alterados."
+          }
+        }
+      }
+    },
+    "The restored data did not match the backup, so your previous data was put back." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os dados restaurados não bateram com o backup, então seus dados anteriores foram recolocados."
+          }
+        }
+      }
+    },
     "This Cycle" : {
       "localizations" : {
         "pt-BR" : {
@@ -5921,6 +6321,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Esta Semana"
+          }
+        }
+      }
+    },
+    "This backup uses format version %lld, which this version of LifeTracker cannot read. Update the app and try again." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este backup usa o formato versão %lld, que esta versão do LifeTracker não consegue ler. Atualize o app e tente de novo."
           }
         }
       }
@@ -5991,6 +6401,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Este ciclo já terminou, então o gasto projetado é igual ao gasto registrado."
+          }
+        }
+      }
+    },
+    "This file is not a LifeTracker backup." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este arquivo não é um backup do LifeTracker."
           }
         }
       }
@@ -6095,6 +6515,16 @@
         }
       }
     },
+    "This will replace the current LifeTracker data on this iPhone with the contents of this backup. Nothing is merged." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Isso vai substituir os dados atuais do LifeTracker neste iPhone pelo conteúdo deste backup. Nada é mesclado."
+          }
+        }
+      }
+    },
     "Title" : {
       "localizations" : {
         "pt-BR" : {
@@ -6141,16 +6571,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hábitos de Hoje"
-          }
-        }
-      }
-    },
-    "Today's tasks" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tarefas de hoje"
           }
         }
       }
@@ -6541,6 +6961,26 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Ontem"
+          }
+        }
+      }
+    },
+    "Your current Finance and Habits data will be replaced by this backup." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seus dados atuais de Finanças e Hábitos serão substituídos por este backup."
+          }
+        }
+      }
+    },
+    "Your data is still in its tabs. Choose what to show on Home." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seus dados continuam nas abas. Escolha o que mostrar na Home."
           }
         }
       }

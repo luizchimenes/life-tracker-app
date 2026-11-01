@@ -25,6 +25,8 @@ struct AppSettingsView: View {
                 } footer: {
                     Text("System follows the language selected in iOS Settings.")
                 }
+
+                BackupSettingsSection()
             }
             .navigationTitle("App Settings")
             .toolbar {
